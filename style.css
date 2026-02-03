@@ -84,37 +84,4 @@ body {
     text-align: center;
 }
 
-.donation-box h3 {
-    margin-top: 0;
-    color: #27ae60;
-}
-
-.method-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 10px;
-}
-
-.method-item {
-    background: white;
-    padding: 10px 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    min-width: 150px;
-}
-
-.method-item strong {
-    display: block;
-    font-size: 1.1em;
-    color: #333;
-}
-
-/* Sembunyikan saat cetak raport */
-@media print {
-    .donation-box {
-        display: none;
-    }
-}
 
