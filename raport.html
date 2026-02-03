@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Raport Ramadan</title>
+  <link rel="stylesheet" href="raport.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="raport">
+
+  <h1>📜 RAPORT RAMADAN</h1>
+  <p class="subtitle">Rekap Ibadah Selama 30 Hari</p>
+
+  <section class="identity">
+    <p><strong>Nama:</strong> ______________________</p>
+    <p><strong>Tahun Ramadan:</strong> ____________</p>
+  </section>
+
+  <section class="score">
+    <h2>📊 Nilai Akhir</h2>
+    <p>Total Skor: <strong id="finalSkor">0</strong> / 120</p>
+    <p>Level Ramadan: <strong id="finalLevel">-</strong></p>
+  </section>
+
+  <section>
+    <h2>📈 Grafik Perkembangan Ibadah</h2>
+    <canvas id="grafikFinal" width="700" height="250"></canvas>
+  </section>
+
+  <section class="highlight">
+    <h2>🌙 10 Malam Terakhir</h2>
+    <p>
+      Fokus ibadah di hari-hari penentu adalah
+      cerminan kesungguhan seorang hamba.
+    </p>
+  </section>
+
+  <section>
+    <h2>🧠 Catatan Pribadi</h2>
+    <p class="box">__________________________________________________</p>
+    <p class="box">__________________________________________________</p>
+  </section>
+
+  <section>
+    <h2>🤲 Doa Penutup Ramadan</h2>
+    <p class="box tall">__________________________________________________</p>
+  </section>
+
+  <footer>
+    <p>
+      "Bukan siapa yang paling sempurna,  
+      tapi siapa yang paling jujur dalam berusaha."
+    </p>
+  </footer>
+
+  <button onclick="window.print()">🖨️ CETAK / SIMPAN PDF</button>
+
+</div>
+
+<script src="raport.js"></script>
+<a href="index.html" class="btn">⬅️ Kembali ke Menu Utama</a>
+
+</body>
+</html>
