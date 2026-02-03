@@ -2,82 +2,37 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Planner Harian Ramadan</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planner Ramadhan</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-<div class="container">
-  <h1>🌙 PLANNER HARIAN RAMADAN</h1>
-  <p class="subtitle">1 Hari = 1 Halaman</p>
+  <!-- HEADER -->
+  <header class="header">
+    <h1>🌙 Planner Ramadhan</h1>
+    <p>Catat amal harian, rekap 30 hari, dan raport akhir Ramadhan</p>
+  </header>
 
-  <section class="header">
-    <label>Hari ke- <input type="text"></label>
-    <label>Tanggal <input type="date"></label>
-  </section>
+  <!-- MENU UTAMA -->
+  <main class="container">
 
-  <section>
-    <h2>🕋 Checklist Ibadah Wajib</h2>
-    <div class="checklist">
-      <label><input type="checkbox"> Subuh</label>
-      <label><input type="checkbox"> Dzuhur</label>
-      <label><input type="checkbox"> Ashar</label>
-      <label><input type="checkbox"> Maghrib</label>
-      <label><input type="checkbox"> Isya</label>
-      <label><input type="checkbox"> Puasa Hari Ini</label>
+    <div class="card">
+      <h2>📌 Menu Utama</h2>
+
+      <a class="btn" href="rekap.html">📅 Rekap 30 Hari</a>
+
+      <a class="btn" href="raport.html">📝 Raport Akhir</a>
+
+      <a class="btn secondary" href="#">➕ Planner Harian (Coming Soon)</a>
     </div>
-  </section>
 
-  <section>
-    <h2>🌙 Ibadah Sunnah</h2>
-    <div class="checklist">
-      <label><input type="checkbox"> Tarawih</label>
-      <label><input type="checkbox"> Witir</label>
-      <label><input type="checkbox"> Dhuha</label>
-      <label><input type="checkbox"> Tahajud</label>
-      <label><input type="checkbox"> Rawatib</label>
-      <label><input type="checkbox"> Dzikir</label>
-      <label><input type="checkbox"> Sedekah</label>
+    <div class="footer">
+      <p>© 2026 Planner Ramadhan - Dibuat untuk evaluasi ibadah</p>
     </div>
-  </section>
 
-  <section>
-    <h2>📖 Target Tilawah Hari Ini</h2>
-    <input type="text" placeholder="Target hari ini">
-    <input type="text" placeholder="Realisasi">
-  </section>
-
-  <section>
-    <h2>🕰️ Waktu Penting</h2>
-    <label>Sahur <input type="time"></label>
-    <label>Iftar <input type="time"></label>
-  </section>
-
-  <section>
-    <h2>📝 Catatan & Muhasabah</h2>
-    <textarea placeholder="Apa yang berjalan baik hari ini?"></textarea>
-    <textarea placeholder="Apa yang perlu diperbaiki?"></textarea>
-    <textarea placeholder="Pelajaran hari ini"></textarea>
-  </section>
-
-  <section>
-    <h2>🤲 Doa & Harapan Hari Ini</h2>
-    <textarea placeholder="Tuliskan doa dan harapanmu hari ini"></textarea>
-  </section>
-
-  <section>
-    <h2>🌱 Refleksi Singkat</h2>
-    <label><input type="radio" name="refleksi"> Sudah berusaha maksimal</label>
-    <label><input type="radio" name="refleksi"> Cukup baik</label>
-    <label><input type="radio" name="refleksi"> Perlu lebih diperbaiki</label>
-  </section>
-
-  <footer>
-    <p>✨ Hari ini mungkin belum sempurna,<br>
-    tapi setiap niat baik dicatat sebagai pahala.</p>
-  </footer>
-</div>
+  </main>
 
 </body>
 </html>
