@@ -52,29 +52,20 @@ body {
 }
 
 /* BUTTONS */
-.btn {
-  display: block;
-  padding: 15px;
-  margin: 12px 0;
-  border-radius: 12px;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: bold;
-  background: #2a5298;
-  color: white;
-  transition: 0.3s;
+.menu-button {
+    display: block;          /* Membuat link menjadi kotak penuh */
+    background-color: #3b5998; /* Warna biru sesuai tema Anda */
+    color: white;            /* Warna tulisan putih */
+    padding: 15px;           /* Memberi ruang di dalam kotak */
+    margin: 10px 0;          /* Jarak antar tombol (atas-bawah) */
+    text-decoration: none;   /* Menghilangkan garis bawah pada link */
+    border-radius: 8px;      /* Membuat sudut kotak melengkung */
+    font-weight: bold;       /* Menebalkan tulisan */
+    text-align: center;      /* Tulisan di tengah */
 }
 
-.btn:hover {
-  background: #1e3c72;
-}
-
-.secondary {
-  background: #999;
-}
-
-.secondary:hover {
-  background: #777;
+.menu-button:hover {
+    background-color: #2d4373; /* Warna agak gelap saat kursor menempel */
 }
 
 /* FOOTER */
@@ -84,3 +75,4 @@ body {
   font-size: 13px;
   color: gray;
 }
+
