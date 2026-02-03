@@ -1,85 +1,449 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Planner Harian Ramadan</title>
-  <link rel="stylesheet" href="style.css">
-
-</head>
-<body>
-
-<div class="container">
-  <h1>🌙 PLANNER HARIAN RAMADAN</h1>
-  <p class="subtitle">1 Hari = 1 Halaman</p>
-
-  <section class="header">
-    <label>Hari ke- <input type="text"></label>
-    <label>Tanggal <input type="date"></label>
-  </section>
-
-  <section>
-    <h2>🕋 Checklist Ibadah Wajib</h2>
-    <div class="checklist">
-      <label><input type="checkbox"> Subuh</label>
-      <label><input type="checkbox"> Dzuhur</label>
-      <label><input type="checkbox"> Ashar</label>
-      <label><input type="checkbox"> Maghrib</label>
-      <label><input type="checkbox"> Isya</label>
-      <label><input type="checkbox"> Puasa Hari Ini</label>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@400;600;700&display=swap');
+    
+    .islamic-pattern {
+      background: linear-gradient(135deg, #1e3a5f 0%, #2d5f8d 50%, #1e3a5f 100%);
+      position: relative;
+    }
+    
+    .islamic-pattern::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    
+    .card-shadow {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .input-field {
+      transition: all 0.3s ease;
+      border: 2px solid #e5e7eb;
+    }
+    
+    .input-field:focus {
+      outline: none;
+      border-color: #ffd700;
+      box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+    }
+    
+    .checkbox-custom:checked {
+      background-color: #10b981;
+      border-color: #10b981;
+    }
+    
+    .btn-primary {
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+    }
+    
+    .btn-secondary {
+      transition: all 0.3s ease;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #374151;
+    }
+    
+    .entry-card {
+      transition: all 0.3s ease;
+      border-left: 4px solid #ffd700;
+    }
+    
+    .entry-card:hover {
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #10b981;
+      color: white;
+      padding: 16px 24px;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      animation: slideIn 0.3s ease;
+    }
+    
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    
+    .loading-spinner {
+      border: 3px solid #f3f4f6;
+      border-top: 3px solid #ffd700;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      margin-left: 8px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full overflow-auto">
+  <div class="w-full h-full islamic-pattern">
+   <div class="max-w-7xl mx-auto px-4 py-8"><!-- Header -->
+    <div class="text-center mb-8">
+     <h1 id="main-title" class="text-5xl font-bold text-white mb-2" style="font-family: 'Amiri', serif;">🌙 PLANNER HARIAN RAMADAN</h1>
+     <p id="subtitle" class="text-xl text-yellow-300" style="font-family: 'Poppins', sans-serif;">1 Hari = 1 Halaman</p>
     </div>
-  </section>
-
-  <section>
-    <h2>🌙 Ibadah Sunnah</h2>
-    <div class="checklist">
-      <label><input type="checkbox"> Tarawih</label>
-      <label><input type="checkbox"> Witir</label>
-      <label><input type="checkbox"> Dhuha</label>
-      <label><input type="checkbox"> Tahajud</label>
-      <label><input type="checkbox"> Rawatib</label>
-      <label><input type="checkbox"> Dzikir</label>
-      <label><input type="checkbox"> Sedekah</label>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6"><!-- Form Section (Left) -->
+     <div class="lg:col-span-2">
+      <div class="bg-white rounded-xl p-8 card-shadow">
+       <form id="planner-form"><!-- Header Info -->
+        <div class="grid grid-cols-2 gap-4 mb-6">
+         <div><label class="block text-sm font-semibold text-gray-700 mb-2" style="font-family: 'Poppins', sans-serif;">Hari ke-</label> <input type="text" id="day-number" class="w-full px-4 py-3 rounded-lg input-field" placeholder="Contoh: 15" required>
+         </div>
+         <div><label class="block text-sm font-semibold text-gray-700 mb-2" style="font-family: 'Poppins', sans-serif;">Tanggal</label> <input type="date" id="date" class="w-full px-4 py-3 rounded-lg input-field" required>
+         </div>
+        </div><!-- Ibadah Wajib -->
+        <div class="mb-6">
+         <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center" style="font-family: 'Amiri', serif;"><span class="text-3xl mr-2">🕋</span> Checklist Ibadah Wajib</h2>
+         <div class="grid grid-cols-2 md:grid-cols-3 gap-3"><label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" id="subuh" class="w-5 h-5 checkbox-custom rounded"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Subuh</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" id="dzuhur" class="w-5 h-5 checkbox-custom rounded"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Dzuhur</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" id="ashar" class="w-5 h-5 checkbox-custom rounded"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Ashar</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" id="maghrib" class="w-5 h-5 checkbox-custom rounded"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Maghrib</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" id="isya" class="w-5 h-5 checkbox-custom rounded"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Isya</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" id="puasa" class="w-5 h-5 checkbox-custom rounded"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Puasa Hari Ini</span> </label>
+         </div>
+        </div><!-- Ibadah Sunnah -->
+        <div class="mb-6">
+         <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center" style="font-family: 'Amiri', serif;"><span class="text-3xl mr-2">🌙</span> Ibadah Sunnah</h2>
+         <div class="grid grid-cols-2 md:grid-cols-3 gap-3"><label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" id="tarawih" class="w-5 h-5 checkbox-custom rounded"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Tarawih</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" id="witir" class="w-5 h-5 checkbox-custom rounded"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Witir</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" id="dhuha" class="w-5 h-5 checkbox-custom rounded"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Dhuha</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" id="tahajud" class="w-5 h-5 checkbox-custom rounded"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Tahajud</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" id="rawatib" class="w-5 h-5 checkbox-custom rounded"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Rawatib</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" id="dzikir" class="w-5 h-5 checkbox-custom rounded"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Dzikir</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" id="sedekah" class="w-5 h-5 checkbox-custom rounded"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Sedekah</span> </label>
+         </div>
+        </div><!-- Target Tilawah -->
+        <div class="mb-6">
+         <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center" style="font-family: 'Amiri', serif;"><span class="text-3xl mr-2">📖</span> Target Tilawah Hari Ini</h2>
+         <div class="grid grid-cols-2 gap-4"><input type="text" id="target-tilawah" class="w-full px-4 py-3 rounded-lg input-field" placeholder="Target hari ini (mis: Juz 5)"> <input type="text" id="realisasi-tilawah" class="w-full px-4 py-3 rounded-lg input-field" placeholder="Realisasi (mis: Juz 4)">
+         </div>
+        </div><!-- Waktu Penting -->
+        <div class="mb-6">
+         <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center" style="font-family: 'Amiri', serif;"><span class="text-3xl mr-2">🕰️</span> Waktu Penting</h2>
+         <div class="grid grid-cols-2 gap-4">
+          <div><label class="block text-sm font-semibold text-gray-700 mb-2" style="font-family: 'Poppins', sans-serif;">Sahur</label> <input type="time" id="waktu-sahur" class="w-full px-4 py-3 rounded-lg input-field">
+          </div>
+          <div><label class="block text-sm font-semibold text-gray-700 mb-2" style="font-family: 'Poppins', sans-serif;">Iftar</label> <input type="time" id="waktu-iftar" class="w-full px-4 py-3 rounded-lg input-field">
+          </div>
+         </div>
+        </div><!-- Catatan & Muhasabah -->
+        <div class="mb-6">
+         <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center" style="font-family: 'Amiri', serif;"><span class="text-3xl mr-2">📝</span> Catatan &amp; Muhasabah</h2><textarea id="catatan-baik" class="w-full px-4 py-3 rounded-lg input-field mb-3" rows="2" placeholder="Apa yang berjalan baik hari ini?"></textarea> <textarea id="catatan-perbaikan" class="w-full px-4 py-3 rounded-lg input-field mb-3" rows="2" placeholder="Apa yang perlu diperbaiki?"></textarea> <textarea id="pelajaran" class="w-full px-4 py-3 rounded-lg input-field" rows="2" placeholder="Pelajaran hari ini"></textarea>
+        </div><!-- Doa & Harapan -->
+        <div class="mb-6">
+         <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center" style="font-family: 'Amiri', serif;"><span class="text-3xl mr-2">🤲</span> Doa &amp; Harapan Hari Ini</h2><textarea id="doa" class="w-full px-4 py-3 rounded-lg input-field" rows="3" placeholder="Tuliskan doa dan harapanmu hari ini"></textarea>
+        </div><!-- Refleksi -->
+        <div class="mb-6">
+         <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center" style="font-family: 'Amiri', serif;"><span class="text-3xl mr-2">🌱</span> Refleksi Singkat</h2>
+         <div class="space-y-2"><label class="flex items-center space-x-2 cursor-pointer"> <input type="radio" name="refleksi" value="maksimal" class="w-4 h-4"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Sudah berusaha maksimal</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="radio" name="refleksi" value="cukup" class="w-4 h-4"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Cukup baik</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="radio" name="refleksi" value="perlu-perbaikan" class="w-4 h-4"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Perlu lebih diperbaiki</span> </label>
+         </div>
+        </div><!-- Submit Button --> <button type="submit" id="submit-btn" class="w-full py-4 rounded-lg font-bold text-gray-800 btn-primary text-lg" style="font-family: 'Poppins', sans-serif;"> 💾 Simpan Planner Hari Ini </button>
+       </form>
+      </div><!-- Footer Message -->
+      <div class="mt-6 text-center bg-white/10 backdrop-blur-sm rounded-xl p-6">
+       <p id="footer-message" class="text-yellow-200 text-lg leading-relaxed" style="font-family: 'Amiri', serif;">✨ Hari ini mungkin belum sempurna,<br>
+         tapi setiap niat baik dicatat sebagai pahala.</p>
+      </div>
+     </div><!-- Entries List Section (Right) -->
+     <div class="lg:col-span-1">
+      <div class="bg-white rounded-xl p-6 card-shadow sticky top-4">
+       <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center justify-between" style="font-family: 'Amiri', serif;"><span>📅 Catatan Saya</span> <span id="entry-count" class="text-sm font-normal text-gray-500">0 hari</span></h2>
+       <div id="entries-list" class="space-y-3 max-h-[600px] overflow-y-auto">
+        <p class="text-gray-400 text-center py-8" style="font-family: 'Poppins', sans-serif;">Belum ada catatan.<br>
+         Mulai isi planner Anda!</p>
+       </div>
+      </div>
+     </div>
     </div>
-  </section>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      page_title: "PLANNER HARIAN RAMADAN",
+      subtitle_text: "1 Hari = 1 Halaman",
+      footer_message: "✨ Hari ini mungkin belum sempurna, tapi setiap niat baik dicatat sebagai pahala."
+    };
 
-  <section>
-    <h2>📖 Target Tilawah Hari Ini</h2>
-    <input type="text" placeholder="Target hari ini">
-    <input type="text" placeholder="Realisasi">
-  </section>
+    let allEntries = [];
 
-  <section>
-    <h2>🕰️ Waktu Penting</h2>
-    <label>Sahur <input type="time"></label>
-    <label>Iftar <input type="time"></label>
-  </section>
+    const dataHandler = {
+      onDataChanged(data) {
+        allEntries = data.sort((a, b) => {
+          const dateA = new Date(a.created_at);
+          const dateB = new Date(b.created_at);
+          return dateB - dateA;
+        });
+        renderEntries();
+      }
+    };
 
-  <section>
-    <h2>📝 Catatan & Muhasabah</h2>
-    <textarea placeholder="Apa yang berjalan baik hari ini?"></textarea>
-    <textarea placeholder="Apa yang perlu diperbaiki?"></textarea>
-    <textarea placeholder="Pelajaran hari ini"></textarea>
-  </section>
+    function renderEntries() {
+      const entriesList = document.getElementById('entries-list');
+      const entryCount = document.getElementById('entry-count');
+      
+      entryCount.textContent = `${allEntries.length} hari`;
+      
+      if (allEntries.length === 0) {
+        entriesList.innerHTML = '<p class="text-gray-400 text-center py-8" style="font-family: \'Poppins\', sans-serif;">Belum ada catatan.<br>Mulai isi planner Anda!</p>';
+        return;
+      }
+      
+      entriesList.innerHTML = allEntries.map(entry => {
+        const date = new Date(entry.date);
+        const formattedDate = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+        const completedIbadah = [entry.subuh, entry.dzuhur, entry.ashar, entry.maghrib, entry.isya].filter(Boolean).length;
+        
+        return `
+          <div class="entry-card bg-gray-50 rounded-lg p-4 cursor-pointer" data-id="${entry.__backendId}">
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <h3 class="font-bold text-gray-800" style="font-family: 'Poppins', sans-serif;">Hari ke-${entry.day_number}</h3>
+                <p class="text-sm text-gray-600">${formattedDate}</p>
+              </div>
+              <button class="text-red-500 hover:text-red-700 font-bold delete-btn" data-id="${entry.__backendId}">🗑️</button>
+            </div>
+            <div class="flex items-center space-x-2 text-sm text-gray-600">
+              <span>🕌 ${completedIbadah}/5 Sholat</span>
+              ${entry.puasa ? '<span class="text-green-600">✓ Puasa</span>' : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      document.querySelectorAll('.entry-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+          if (!e.target.classList.contains('delete-btn')) {
+            const id = card.dataset.id;
+            loadEntry(id);
+          }
+        });
+      });
+      
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          const id = btn.dataset.id;
+          await deleteEntry(id);
+        });
+      });
+    }
 
-  <section>
-    <h2>🤲 Doa & Harapan Hari Ini</h2>
-    <textarea placeholder="Tuliskan doa dan harapanmu hari ini"></textarea>
-  </section>
+    function loadEntry(id) {
+      const entry = allEntries.find(e => e.__backendId === id);
+      if (!entry) return;
+      
+      document.getElementById('day-number').value = entry.day_number;
+      document.getElementById('date').value = entry.date;
+      document.getElementById('subuh').checked = entry.subuh;
+      document.getElementById('dzuhur').checked = entry.dzuhur;
+      document.getElementById('ashar').checked = entry.ashar;
+      document.getElementById('maghrib').checked = entry.maghrib;
+      document.getElementById('isya').checked = entry.isya;
+      document.getElementById('puasa').checked = entry.puasa;
+      document.getElementById('tarawih').checked = entry.tarawih;
+      document.getElementById('witir').checked = entry.witir;
+      document.getElementById('dhuha').checked = entry.dhuha;
+      document.getElementById('tahajud').checked = entry.tahajud;
+      document.getElementById('rawatib').checked = entry.rawatib;
+      document.getElementById('dzikir').checked = entry.dzikir;
+      document.getElementById('sedekah').checked = entry.sedekah;
+      document.getElementById('target-tilawah').value = entry.target_tilawah;
+      document.getElementById('realisasi-tilawah').value = entry.realisasi_tilawah;
+      document.getElementById('waktu-sahur').value = entry.waktu_sahur;
+      document.getElementById('waktu-iftar').value = entry.waktu_iftar;
+      document.getElementById('catatan-baik').value = entry.catatan_baik;
+      document.getElementById('catatan-perbaikan').value = entry.catatan_perbaikan;
+      document.getElementById('pelajaran').value = entry.pelajaran;
+      document.getElementById('doa').value = entry.doa;
+      
+      const refleksiRadio = document.querySelector(`input[name="refleksi"][value="${entry.refleksi}"]`);
+      if (refleksiRadio) refleksiRadio.checked = true;
+      
+      document.getElementById('planner-form').dataset.editingId = id;
+      document.getElementById('submit-btn').innerHTML = '✏️ Update Planner';
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      showToast('Catatan dimuat untuk diedit');
+    }
 
-  <section>
-    <h2>🌱 Refleksi Singkat</h2>
-    <label><input type="radio" name="refleksi"> Sudah berusaha maksimal</label>
-    <label><input type="radio" name="refleksi"> Cukup baik</label>
-    <label><input type="radio" name="refleksi"> Perlu lebih diperbaiki</label>
-  </section>
+    async function deleteEntry(id) {
+      const entry = allEntries.find(e => e.__backendId === id);
+      if (!entry) return;
+      
+      const deleteBtn = document.querySelector(`.delete-btn[data-id="${id}"]`);
+      const originalContent = deleteBtn.innerHTML;
+      deleteBtn.innerHTML = '<div class="loading-spinner"></div>';
+      deleteBtn.disabled = true;
+      
+      const result = await window.dataSdk.delete(entry);
+      
+      if (result.isOk) {
+        showToast('Catatan berhasil dihapus');
+        if (document.getElementById('planner-form').dataset.editingId === id) {
+          clearForm();
+        }
+      } else {
+        deleteBtn.innerHTML = originalContent;
+        deleteBtn.disabled = false;
+        showToast('Gagal menghapus catatan: ' + result.error.message, 'error');
+      }
+    }
 
-  <footer>
-    <p>✨ Hari ini mungkin belum sempurna,<br>
-    tapi setiap niat baik dicatat sebagai pahala.</p>
-  </footer>
-</div>
-<a href="index.html" class="btn">⬅️ Kembali ke Menu Utama</a>
-</body>
+    function clearForm() {
+      document.getElementById('planner-form').reset();
+      delete document.getElementById('planner-form').dataset.editingId;
+      document.getElementById('submit-btn').innerHTML = '💾 Simpan Planner Hari Ini';
+    }
+
+    function showToast(message, type = 'success') {
+      const existingToast = document.querySelector('.toast');
+      if (existingToast) existingToast.remove();
+      
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.style.background = type === 'error' ? '#ef4444' : '#10b981';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    document.getElementById('planner-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      if (allEntries.length >= 999 && !e.target.dataset.editingId) {
+        showToast('Maksimum 999 catatan tercapai. Hapus beberapa catatan terlebih dahulu.', 'error');
+        return;
+      }
+      
+      const submitBtn = document.getElementById('submit-btn');
+      const originalContent = submitBtn.innerHTML;
+      submitBtn.innerHTML = 'Menyimpan...<div class="loading-spinner"></div>';
+      submitBtn.disabled = true;
+      
+      const refleksiValue = document.querySelector('input[name="refleksi"]:checked')?.value || '';
+      
+      const entryData = {
+        day_number: document.getElementById('day-number').value,
+        date: document.getElementById('date').value,
+        subuh: document.getElementById('subuh').checked,
+        dzuhur: document.getElementById('dzuhur').checked,
+        ashar: document.getElementById('ashar').checked,
+        maghrib: document.getElementById('maghrib').checked,
+        isya: document.getElementById('isya').checked,
+        puasa: document.getElementById('puasa').checked,
+        tarawih: document.getElementById('tarawih').checked,
+        witir: document.getElementById('witir').checked,
+        dhuha: document.getElementById('dhuha').checked,
+        tahajud: document.getElementById('tahajud').checked,
+        rawatib: document.getElementById('rawatib').checked,
+        dzikir: document.getElementById('dzikir').checked,
+        sedekah: document.getElementById('sedekah').checked,
+        target_tilawah: document.getElementById('target-tilawah').value,
+        realisasi_tilawah: document.getElementById('realisasi-tilawah').value,
+        waktu_sahur: document.getElementById('waktu-sahur').value,
+        waktu_iftar: document.getElementById('waktu-iftar').value,
+        catatan_baik: document.getElementById('catatan-baik').value,
+        catatan_perbaikan: document.getElementById('catatan-perbaikan').value,
+        pelajaran: document.getElementById('pelajaran').value,
+        doa: document.getElementById('doa').value,
+        refleksi: refleksiValue,
+        created_at: new Date().toISOString()
+      };
+      
+      let result;
+      const editingId = e.target.dataset.editingId;
+      
+      if (editingId) {
+        const existingEntry = allEntries.find(e => e.__backendId === editingId);
+        result = await window.dataSdk.update({ ...entryData, __backendId: editingId });
+      } else {
+        result = await window.dataSdk.create(entryData);
+      }
+      
+      if (result.isOk) {
+        showToast(editingId ? 'Planner berhasil diperbarui!' : 'Planner berhasil disimpan!');
+        clearForm();
+      } else {
+        showToast('Gagal menyimpan: ' + result.error.message, 'error');
+      }
+      
+      submitBtn.innerHTML = originalContent;
+      submitBtn.disabled = false;
+    });
+
+    async function onConfigChange(config) {
+      const pageTitle = config.page_title || defaultConfig.page_title;
+      const subtitleText = config.subtitle_text || defaultConfig.subtitle_text;
+      const footerMessage = config.footer_message || defaultConfig.footer_message;
+      
+      document.getElementById('main-title').textContent = `🌙 ${pageTitle}`;
+      document.getElementById('subtitle').textContent = subtitleText;
+      document.getElementById('footer-message').innerHTML = footerMessage.replace(/\n/g, '<br>');
+    }
+
+    (async function init() {
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities: (config) => ({
+            recolorables: [],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (config) => new Map([
+            ["page_title", config.page_title || defaultConfig.page_title],
+            ["subtitle_text", config.subtitle_text || defaultConfig.subtitle_text],
+            ["footer_message", config.footer_message || defaultConfig.footer_message]
+          ])
+        });
+      }
+      
+      if (window.dataSdk) {
+        const initResult = await window.dataSdk.init(dataHandler);
+        if (!initResult.isOk) {
+          console.error("Failed to initialize Data SDK");
+        }
+      }
+    })();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c7e79a042006be5',t:'MTc3MDA4NTQ5OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
-
