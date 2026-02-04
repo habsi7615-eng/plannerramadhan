@@ -1,374 +1,303 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Planner Ramadan Pro Ultimate</title>
+  <title>Planner Ramadan Ultimate Pro</title>
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- jsPDF Export -->
+  <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      transition: 0.3s;
-    }
+    body { font-family: Tahoma; }
 
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #16a34a;
-      color: white;
-      padding: 14px 20px;
-      border-radius: 12px;
-      z-index: 9999;
-    }
+    .gold { color: #d4af37; }
 
     .dark-mode {
       background: #0f172a !important;
       color: white !important;
     }
 
-    .dark-card {
+    .dark-mode .card {
       background: #1e293b !important;
       color: white !important;
+    }
+
+    .btn:hover {
+      transform: scale(1.03);
+      transition: 0.2s;
     }
   </style>
 </head>
 
-<body class="bg-gradient-to-br from-green-900 to-emerald-700 min-h-screen">
+<body class="bg-gray-50">
 
 <!-- ================= LOGIN ================= -->
-<div id="loginScreen" class="flex items-center justify-center min-h-screen">
-  <div class="bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full text-center">
+<div id="loginScreen"
+  class="min-h-screen flex justify-center items-center bg-gradient-to-br from-green-900 to-emerald-700">
+
+  <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-sm text-center">
 
     <h1 class="text-2xl font-extrabold text-green-800 mb-2">
-      🌙 Planner Ramadan Pro
+      🌙 Planner Ramadan <span class="gold">ULTIMATE</span>
     </h1>
 
-    <p class="text-sm text-gray-500 mb-4">
-      Login pakai nomor WhatsApp (offline)
+    <p class="text-sm text-gray-500 mb-5">
+      Login dengan Nama & WhatsApp
     </p>
+
+    <input id="userName"
+      class="w-full p-3 rounded-xl border mb-3"
+      placeholder="Nama Anda">
 
     <input id="waNumber"
       class="w-full p-3 rounded-xl border mb-4"
-      placeholder="Contoh: 08xxxxxxx">
+      placeholder="Nomor WhatsApp (08xxxx)">
 
     <button onclick="loginUser()"
-      class="w-full py-3 rounded-xl bg-green-700 text-white font-bold hover:opacity-90">
+      class="btn w-full py-3 rounded-xl bg-green-700 text-white font-bold">
       🔑 Masuk Sekarang
     </button>
 
-    <p class="text-xs text-gray-400 mt-4">
-      Data aman tersimpan di perangkat Anda.
-    </p>
   </div>
 </div>
-
 
 <!-- ================= DASHBOARD ================= -->
-<div id="dashboard" class="hidden max-w-5xl mx-auto p-6">
+<div id="dashboard" class="hidden">
 
-  <!-- Header -->
-  <div class="text-center text-white mb-6">
-    <h1 class="text-4xl font-bold text-yellow-300">🌙 Planner Ramadan Pro Ultimate</h1>
-    <p class="text-lg">Checklist Amal + Statistik + Export PDF</p>
-    <p id="userLabel" class="text-sm mt-2"></p>
+  <!-- HEADER -->
+  <header class="p-6 bg-gradient-to-r from-green-800 to-emerald-600 text-white">
+    <h1 class="text-3xl font-bold">🌙 Planner Ramadan Ultimate Pro</h1>
+    <p id="welcomeUser" class="text-sm mt-1 opacity-90"></p>
 
-    <!-- Dark Mode Toggle -->
-    <button onclick="toggleDarkMode()"
-      class="mt-4 px-4 py-2 bg-black/30 rounded-xl">
-      🌙 Dark Mode Islami
-    </button>
-  </div>
+    <div class="mt-4 flex gap-3 flex-wrap">
 
+      <a href="index.html"
+        class="btn px-4 py-2 rounded-xl bg-white/20">
+        ⬅️ Beranda
+      </a>
 
-  <!-- FORM -->
-  <div id="cardForm" class="bg-white rounded-2xl shadow-xl p-6 mb-6">
+      <button onclick="toggleDarkMode()"
+        class="btn px-4 py-2 rounded-xl bg-black/30">
+        🌙 Dark Mode
+      </button>
 
-    <h2 class="text-xl font-bold text-green-800 mb-3">
-      📝 Planner Hari Ini
-    </h2>
+      <button onclick="logoutUser()"
+        class="btn px-4 py-2 rounded-xl bg-red-600">
+        🚪 Logout
+      </button>
+    </div>
+  </header>
 
-    <input id="dayTitle"
-      class="w-full p-3 border rounded-xl mb-3"
-      placeholder="Hari ke berapa? (contoh: Hari 10)">
+  <!-- MAIN -->
+  <main class="p-6 max-w-4xl mx-auto space-y-6">
 
-    <!-- Checklist Sholat -->
-    <h3 class="font-bold mb-2">🕌 Checklist Sholat Wajib</h3>
-    <div class="grid grid-cols-2 gap-2 mb-4">
-      <label><input type="checkbox" id="subuh"> Subuh</label>
-      <label><input type="checkbox" id="dzuhur"> Dzuhur</label>
-      <label><input type="checkbox" id="ashar"> Ashar</label>
-      <label><input type="checkbox" id="maghrib"> Maghrib</label>
-      <label><input type="checkbox" id="isya"> Isya</label>
+    <!-- ================= KALENDER 30 HARI ================= -->
+    <div class="card bg-white p-6 rounded-2xl shadow">
+      <h2 class="text-xl font-bold text-green-800 mb-3">
+        📅 Kalender Ramadan 30 Hari
+      </h2>
+
+      <div id="calendarGrid"
+        class="grid grid-cols-5 gap-2 text-center text-sm">
+      </div>
     </div>
 
-    <!-- Sunnah -->
-    <h3 class="font-bold mb-2">🌙 Amal Sunnah</h3>
-    <div class="grid grid-cols-2 gap-2 mb-4">
-      <label><input type="checkbox" id="tarawih"> Tarawih</label>
-      <label><input type="checkbox" id="tahajud"> Tahajud</label>
-      <label><input type="checkbox" id="sedekah"> Sedekah</label>
-      <label><input type="checkbox" id="tilawah"> Tilawah</label>
+    <!-- ================= CHECKLIST IBADAH ================= -->
+    <div class="card bg-white p-6 rounded-2xl shadow">
+      <h2 class="text-xl font-bold text-green-800 mb-3">
+        🕌 Checklist Ibadah Harian
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
+
+        <label><input type="checkbox" id="subuh"> Subuh</label>
+        <label><input type="checkbox" id="dzuhur"> Dzuhur</label>
+        <label><input type="checkbox" id="ashar"> Ashar</label>
+        <label><input type="checkbox" id="maghrib"> Maghrib</label>
+        <label><input type="checkbox" id="isya"> Isya</label>
+
+        <label><input type="checkbox" id="tarawih"> Tarawih</label>
+        <label><input type="checkbox" id="witir"> Witir</label>
+        <label><input type="checkbox" id="dhuha"> Dhuha</label>
+        <label><input type="checkbox" id="taubat"> Taubat</label>
+        <label><input type="checkbox" id="hajat"> Hajat</label>
+
+      </div>
+
+      <button onclick="saveChecklist()"
+        class="btn mt-4 w-full py-3 rounded-xl bg-green-700 text-white font-bold">
+        💾 Simpan Checklist Hari Ini
+      </button>
     </div>
 
-    <textarea id="notes"
-      class="w-full p-3 border rounded-xl mb-3"
-      rows="3"
-      placeholder="Catatan & Muhasabah hari ini..."></textarea>
+    <!-- ================= PROGRESS BAR ================= -->
+    <div class="card bg-white p-6 rounded-2xl shadow">
+      <h2 class="text-xl font-bold text-green-800 mb-3">
+        📊 Progress Ibadah Anda
+      </h2>
 
-    <button onclick="saveEntry()"
-      class="w-full py-3 rounded-xl bg-green-700 text-white font-bold">
-      💾 Simpan Planner Hari Ini
-    </button>
-  </div>
+      <div class="w-full bg-gray-200 rounded-full h-4">
+        <div id="progressBar"
+          class="bg-green-600 h-4 rounded-full"
+          style="width:0%">
+        </div>
+      </div>
 
+      <p id="progressText" class="text-sm mt-2 text-gray-600"></p>
+    </div>
 
-  <!-- STATISTIK -->
-  <div id="cardStats" class="bg-white rounded-2xl shadow-xl p-6 mb-6">
-    <h2 class="text-lg font-bold text-green-800 mb-2">
-      📊 Statistik Amal Ramadan
-    </h2>
-    <p id="statsText">Belum ada data...</p>
-  </div>
+    <!-- ================= EXPORT PDF ================= -->
+    <div class="card bg-white p-6 rounded-2xl shadow">
+      <h2 class="text-xl font-bold text-green-800 mb-3">
+        📄 Export Planner
+      </h2>
 
+      <button onclick="exportPDF()"
+        class="btn w-full py-3 rounded-xl bg-emerald-700 text-white font-bold">
+        📄 Export PDF Full
+      </button>
+    </div>
 
-  <!-- BUTTONS -->
-  <div class="flex gap-3 mb-6">
-    <button onclick="exportPDF()"
-      class="flex-1 py-3 rounded-xl bg-emerald-600 text-white font-bold">
-      📄 Export PDF
-    </button>
-
-    <button onclick="shareApp()"
-      class="flex-1 py-3 rounded-xl bg-yellow-500 text-black font-bold">
-      🔗 Share App
-    </button>
-  </div>
-
-
-  <!-- LIST -->
-  <div id="cardList" class="bg-white rounded-2xl shadow-xl p-6 mb-6">
-    <h2 class="text-lg font-bold text-green-800 mb-3">
-      📌 Catatan Saya
-    </h2>
-    <div id="entriesList" class="space-y-3"></div>
-  </div>
-
-
-  <!-- DONATION BOX -->
-  <div id="cardDonate" class="bg-white rounded-2xl shadow-xl p-6 text-center">
-
-    <h2 class="text-xl font-bold text-green-800 mb-2">
-      🌟 Dukung Pengembangan Aplikasi
-    </h2>
-
-    <p class="text-gray-600 text-sm mb-4">
-      Jika aplikasi ini bermanfaat, Anda bisa berdonasi:
-    </p>
-
-    <p class="font-bold">📱 DANA: 085216175600</p>
-    <button onclick="copyText('085216175600')"
-      class="mt-2 px-4 py-2 bg-green-700 text-white rounded-xl">
-      Copy
-    </button>
-
-    <p class="font-bold mt-4">🏦 Bank Jago: 509102449428</p>
-    <button onclick="copyText('509102449428')"
-      class="mt-2 px-4 py-2 bg-green-700 text-white rounded-xl">
-      Copy
-    </button>
-
-    <button onclick="openQRIS()"
-      class="mt-4 w-full py-3 bg-yellow-500 rounded-xl font-bold">
-      📌 Tampilkan QRIS
-    </button>
-
-    <p class="text-xs text-gray-400 mt-4">
-      Terima kasih, semoga berkah 🌙
-    </p>
-  </div>
-
+  </main>
 </div>
 
-
-<!-- QRIS POPUP -->
-<div id="qrisPopup"
-  class="hidden fixed inset-0 bg-black/70 flex items-center justify-center">
-
-  <div class="bg-white p-6 rounded-2xl text-center max-w-lg w-full">
-    <h2 class="text-xl font-bold mb-3">Scan QRIS Donasi</h2>
-
-    <img src="https://dummyimage.com/450x450/000/fff.png&text=QRIS+ANDA"
-      class="mx-auto rounded-xl shadow-lg">
-
-    <button onclick="closeQRIS()"
-      class="mt-4 px-6 py-3 bg-red-500 text-white rounded-xl font-bold">
-      Tutup
-    </button>
-  </div>
-</div>
-
-
-<!-- SCRIPT -->
+<!-- ================= SCRIPT ================= -->
 <script>
   let currentUser = "";
-  let entries = [];
-  let dark = false;
-
-  function toast(msg) {
-    const t = document.createElement("div");
-    t.className = "toast";
-    t.innerText = msg;
-    document.body.appendChild(t);
-    setTimeout(() => t.remove(), 2500);
-  }
 
   function loginUser() {
+    const name = document.getElementById("userName").value.trim();
     const wa = document.getElementById("waNumber").value.trim();
-    if (wa.length < 8) return toast("⚠️ Nomor WA tidak valid");
+
+    if (name.length < 2) return alert("Nama wajib diisi!");
+    if (wa.length < 8) return alert("Nomor WA tidak valid!");
 
     currentUser = wa;
+
     localStorage.setItem("ramadan_user", wa);
+    localStorage.setItem("ramadan_name_" + wa, name);
 
     document.getElementById("loginScreen").classList.add("hidden");
     document.getElementById("dashboard").classList.remove("hidden");
-    document.getElementById("userLabel").innerText = "Login: " + wa;
 
-    loadEntries();
-    toast("✅ Login berhasil!");
+    showUserInfo();
+    generateCalendar();
+    loadChecklist();
+    updateProgress();
   }
 
-  function loadEntries() {
-    const data = localStorage.getItem("entries_" + currentUser);
-    entries = data ? JSON.parse(data) : [];
-    renderEntries();
-    updateStats();
+  function logoutUser() {
+    localStorage.removeItem("ramadan_user");
+    location.reload();
   }
 
-  function saveEntry() {
-    const title = document.getElementById("dayTitle").value;
-    const notes = document.getElementById("notes").value;
+  function showUserInfo() {
+    const name = localStorage.getItem("ramadan_name_" + currentUser);
+    document.getElementById("welcomeUser").innerText =
+      "Assalamu’alaikum, " + name + " 🌙";
+  }
 
-    if (!title) return toast("⚠️ Isi judul hari");
+  /* ================= CALENDAR ================= */
+  function generateCalendar() {
+    const grid = document.getElementById("calendarGrid");
+    grid.innerHTML = "";
 
-    const entry = {
-      title,
-      notes,
+    for (let i = 1; i <= 30; i++) {
+      grid.innerHTML += `
+        <div class="p-2 rounded-lg bg-green-100 font-bold">
+          Hari ${i}
+        </div>
+      `;
+    }
+  }
+
+  /* ================= CHECKLIST ================= */
+  function saveChecklist() {
+    const checklist = {
       subuh: subuh.checked,
       dzuhur: dzuhur.checked,
       ashar: ashar.checked,
       maghrib: maghrib.checked,
       isya: isya.checked,
       tarawih: tarawih.checked,
-      tahajud: tahajud.checked,
-      sedekah: sedekah.checked,
-      tilawah: tilawah.checked,
+      witir: witir.checked,
+      dhuha: dhuha.checked,
+      taubat: taubat.checked,
+      hajat: hajat.checked
     };
 
-    entries.unshift(entry);
-    localStorage.setItem("entries_" + currentUser, JSON.stringify(entries));
-
-    renderEntries();
-    updateStats();
-    toast("💾 Planner tersimpan!");
+    localStorage.setItem("checklist_" + currentUser, JSON.stringify(checklist));
+    alert("✅ Checklist tersimpan!");
+    updateProgress();
   }
 
-  function renderEntries() {
-    const list = document.getElementById("entriesList");
-    list.innerHTML = "";
+  function loadChecklist() {
+    const data = localStorage.getItem("checklist_" + currentUser);
 
-    entries.forEach(e => {
-      list.innerHTML += `
-        <div class="p-3 bg-gray-100 rounded-xl">
-          <h3 class="font-bold">${e.title}</h3>
-          <p class="text-sm">${e.notes}</p>
-        </div>
-      `;
-    });
-  }
-
-  function updateStats() {
-    if (entries.length === 0) {
-      statsText.innerText = "Belum ada data...";
-      return;
+    if (data) {
+      const c = JSON.parse(data);
+      Object.keys(c).forEach(id => {
+        document.getElementById(id).checked = c[id];
+      });
     }
-
-    let totalSholat = 0;
-    entries.forEach(e => {
-      totalSholat += [e.subuh,e.dzuhur,e.ashar,e.maghrib,e.isya].filter(x=>x).length;
-    });
-
-    statsText.innerText =
-      `Total Catatan: ${entries.length} hari | Total Sholat Tercentang: ${totalSholat}`;
   }
 
+  /* ================= PROGRESS ================= */
+  function updateProgress() {
+    const boxes = document.querySelectorAll("input[type='checkbox']");
+    const total = boxes.length;
+    let done = 0;
+
+    boxes.forEach(b => { if (b.checked) done++; });
+
+    const percent = Math.round((done / total) * 100);
+
+    document.getElementById("progressBar").style.width = percent + "%";
+    document.getElementById("progressText").innerText =
+      `Progress hari ini: ${done}/${total} amalan (${percent}%)`;
+  }
+
+  /* ================= EXPORT PDF ================= */
   function exportPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    entries.forEach((e, i) => {
-      if (i > 0) doc.addPage();
+    doc.text("Planner Ramadan Ultimate Pro", 10, 15);
 
-      doc.text("Planner Ramadan Pro", 10, 10);
-      doc.text(e.title, 10, 20);
+    const boxes = document.querySelectorAll("input[type='checkbox']");
+    let y = 30;
 
-      doc.text("Catatan:", 10, 35);
-      doc.text(e.notes || "-", 10, 45);
+    boxes.forEach((b) => {
+      doc.text(`${b.id.toUpperCase()} : ${b.checked ? "YES" : "NO"}`, 10, y);
+      y += 8;
     });
 
-    doc.save("planner-ramadan-pro.pdf");
-    toast("📄 PDF berhasil dibuat!");
+    doc.save("planner-ramadan-ultimate.pdf");
   }
 
-  function shareApp() {
-    navigator.share({
-      title: "Planner Ramadan Pro",
-      text: "Aplikasi Planner Ramadan Premium 🌙",
-      url: location.href
-    });
-  }
-
-  function copyText(txt) {
-    navigator.clipboard.writeText(txt);
-    toast("✅ Dicopy: " + txt);
-  }
-
-  function openQRIS() {
-    qrisPopup.classList.remove("hidden");
-  }
-
-  function closeQRIS() {
-    qrisPopup.classList.add("hidden");
-  }
-
-  function toggleDarkMode() {
-    dark = !dark;
-    document.body.classList.toggle("dark-mode");
-
-    ["cardForm","cardStats","cardList","cardDonate"].forEach(id=>{
-      document.getElementById(id).classList.toggle("dark-card");
-    });
-
-    toast("🌙 Dark Mode: " + (dark ? "ON" : "OFF"));
-  }
-
-  // Auto login
-  window.onload = () => {
+  /* ================= AUTO LOGIN ================= */
+  window.onload = function () {
     const saved = localStorage.getItem("ramadan_user");
+
     if (saved) {
       currentUser = saved;
-      loginScreen.classList.add("hidden");
-      dashboard.classList.remove("hidden");
-      userLabel.innerText = "Login: " + saved;
-      loadEntries();
+      document.getElementById("loginScreen").classList.add("hidden");
+      document.getElementById("dashboard").classList.remove("hidden");
+
+      showUserInfo();
+      generateCalendar();
+      loadChecklist();
+      updateProgress();
     }
   };
+
+  function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+  }
 </script>
 
 </body>
