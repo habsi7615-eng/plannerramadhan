@@ -139,34 +139,27 @@
       <div id="entryList" class="space-y-3"></div>
     </div>
 
-    <!-- SUNNAH CHECKLIST -->
-    <div class="card bg-white p-6 rounded-2xl shadow mb-6">
+   <!-- ================= CHECKLIST IBADAH ================= -->
+    <div class="card bg-white p-6 rounded-2xl shadow">
       <h2 class="text-xl font-bold text-green-800 mb-3">
-        🌼 Amalan Sunnah Tambahan
+        🕌 Checklist Ibadah Harian
       </h2>
 
-      <div class="space-y-2 text-sm">
-        <label class="flex items-center gap-2">
-          <input type="checkbox" id="dhuha" class="w-4 h-4">
-          Sholat Dhuha
-        </label>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
 
-        <label class="flex items-center gap-2">
-          <input type="checkbox" id="taubat" class="w-4 h-4">
-          Sholat Taubat
-        </label>
+        <label><input type="checkbox" id="subuh"> Subuh</label>
+        <label><input type="checkbox" id="dzuhur"> Dzuhur</label>
+        <label><input type="checkbox" id="ashar"> Ashar</label>
+        <label><input type="checkbox" id="maghrib"> Maghrib</label>
+        <label><input type="checkbox" id="isya"> Isya</label>
 
-        <label class="flex items-center gap-2">
-          <input type="checkbox" id="hajat" class="w-4 h-4">
-          Sholat Hajat
-        </label>
+        <label><input type="checkbox" id="tarawih"> Tarawih</label>
+        <label><input type="checkbox" id="witir"> Witir</label>
+        <label><input type="checkbox" id="dhuha"> Dhuha</label>
+        <label><input type="checkbox" id="taubat"> Taubat</label>
+        <label><input type="checkbox" id="hajat"> Hajat</label>
+
       </div>
-
-      <button onclick="saveSunnah()"
-        class="btn mt-4 w-full py-3 rounded-xl bg-green-700 text-white font-bold">
-        💾 Simpan Amalan Sunnah
-      </button>
-    </div>
 
     <!-- EXPORT PDF -->
     <div class="card bg-white p-6 rounded-2xl shadow mb-6">
@@ -411,3 +404,4 @@
 
 </body>
 </html>
+
