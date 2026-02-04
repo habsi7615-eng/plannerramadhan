@@ -347,16 +347,24 @@
   }
 
   function saveChecklist() {
-    const boxes = document.querySelectorAll("input[type='checkbox']");
-    let data = {};
+  const boxes = document.querySelectorAll("input[type='checkbox']");
+  let data = {};
 
-    boxes.forEach((b) => {
-      data[b.id] = b.checked;
-    });
+  // ✅ Simpan status checklist
+  boxes.forEach((b) => {
+    data[b.id] = b.checked;
+  });
 
-    localStorage.setItem("checklist_" + currentUser, JSON.stringify(data));
-    alert("✅ Checklist berhasil disimpan!");
-  }
+  localStorage.setItem("checklist_" + currentUser, JSON.stringify(data));
+
+  // ✅ Setelah simpan, kosongkan checklist
+  boxes.forEach((b) => {
+    b.checked = false;
+  });
+
+  alert("✅ Checklist hari ini disimpan & otomatis direset!");
+}
+
 
   function loadChecklist() {
     const saved = localStorage.getItem("checklist_" + currentUser);
@@ -448,3 +456,4 @@
 
 </body>
 </html>
+
