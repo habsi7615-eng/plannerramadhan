@@ -148,30 +148,54 @@
       <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
 
         <label><input type="checkbox" id="subuh"> Subuh</label>
-        <label><input type="checkbox" id="dzuhur"> Dzuhur</label>
-        <label><input type="checkbox" id="ashar"> Ashar</label>
-        <label><input type="checkbox" id="maghrib"> Maghrib</label>
-        <label><input type="checkbox" id="isya"> Isya</label>
+<label><input type="checkbox" id="dzuhur"> Dzuhur</label>
+<label><input type="checkbox" id="ashar"> Ashar</label>
+<label><input type="checkbox" id="maghrib"> Maghrib</label>
+<label><input type="checkbox" id="isya"> Isya</label>
 
-        <label><input type="checkbox" id="tarawih"> Tarawih</label>
-        <label><input type="checkbox" id="witir"> Witir</label>
-        <label><input type="checkbox" id="dhuha"> Dhuha</label>
-        <label><input type="checkbox" id="taubat"> Taubat</label>
-        <label><input type="checkbox" id="hajat"> Hajat</label>
-<label><input type="checkbox" id="hajat"> sedekah</label>
+<label><input type="checkbox" id="tarawih"> Tarawih</label>
+<label><input type="checkbox" id="witir"> Witir</label>
+<label><input type="checkbox" id="dhuha"> Dhuha</label>
+<label><input type="checkbox" id="taubat"> Taubat</label>
+<label><input type="checkbox" id="hajat"> Hajat</label>
+
+<label><input type="checkbox" id="sedekah"> Sedekah</label>
+
       </div>
+<button onclick="saveChecklist()"
+  class="btn mt-4 w-full py-3 rounded-xl bg-green-700 text-white font-bold">
+  💾 Simpan Checklist Hari Ini
+</button>
 
     <!-- EXPORT PDF -->
-    <div class="card bg-white p-6 rounded-2xl shadow mb-6">
-      <h2 class="text-xl font-bold text-green-800 mb-3">
-        📄 Export Data
-      </h2>
+    function exportPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
 
-      <button onclick="exportPDF()"
-        class="btn w-full py-3 rounded-xl bg-emerald-700 text-white font-bold">
-        📄 Export PDF Langsung
-      </button>
-    </div>
+  doc.setFontSize(16);
+  doc.text("📌 Rekap Checklist Ibadah Ramadan", 10, 15);
+
+  const boxes = document.querySelectorAll("input[type='checkbox']");
+  let y = 30;
+
+  boxes.forEach((b) => {
+    const label = b.parentElement.innerText.trim();
+
+    doc.text(`${label} : ${b.checked ? "✅" : "❌"}`, 10, y);
+    y += 8;
+  });
+
+  doc.save("checklist-ramadan.pdf");
+
+  // ✅ RESET setelah export
+  boxes.forEach((b) => b.checked = false);
+
+  // ✅ Hapus storage supaya tidak muncul lagi
+  localStorage.removeItem("checklist_" + currentUser);
+
+  alert("PDF berhasil dibuat & checklist otomatis direset ✅");
+}
+
 
     <!-- DONASI -->
     <div class="card bg-green-50 p-6 rounded-2xl shadow">
@@ -404,5 +428,6 @@
 
 </body>
 </html>
+
 
 
