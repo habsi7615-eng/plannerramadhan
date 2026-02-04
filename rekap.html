@@ -1,251 +1,120 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="h-full">
 <head>
-    <style>
-/* ===== MOBILE FRIENDLY ===== */
-@media (max-width: 600px) {
-
-  body {
-    font-family: Arial, sans-serif;
-    padding: 10px;
-  }
-
-  h1, h2 {
-    text-align: center;
-  }
-
-  table {
-    width: 100%;
-    font-size: 12px;
-  }
-
-  th, td {
-    padding: 6px;
-    text-align: center;
-  }
-
-  /* Scroll tabel */
-  table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-
-  canvas {
-    width: 100% !important;
-    height: auto !important;
-  }
-
-  button {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    margin-top: 10px;
-  }
-}
-</style>
-
-    <style>
-@media print {
-  button {
-    display: none;
-  }
-  canvas {
-    display: none;
-  }
-}
-</style>
-
-    <style>
-  .malam-akhir {
-    background-color: #fff4c2;
-  }
-</style>
-
   <meta charset="UTF-8">
-  <title>Rekap Ramadan</title>
-    <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ramadan Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap');
+    
+    .ramadan-pattern {
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.08) 0%, transparent 50%);
+    }
+    
+    .special-night {
+      position: relative;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 193, 7, 0.1) 100%);
+    }
+    
+    .special-night::before {
+      content: '✨';
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.6;
+    }
+    
+    .checkbox-custom {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: var(--primary-color);
+    }
+    
+    .star-icon {
+      display: inline-block;
+      animation: twinkle 2s ease-in-out infinite;
+    }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    .score-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      height: 32px;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+    
+    .level-badge {
+      display: inline-block;
+      padding: 8px 20px;
+      border-radius: 24px;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+  </style>
 </head>
-<body>
-<a href="index.html" class="btn">⬅️ Kembali ke Menu Utama</a>
-<h1>REKAP RAMADAN</h1>
+<body class="h-full">
+  <div class="w-full h-full overflow-auto ramadan-pattern" style="background: var(--background-color);">
+    <div class="max-w-4xl mx-auto p-6 md:p-8">
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <h1 id="appTitle" class="text-4xl md:text-5xl font-bold mb-2" style="color: var(--text-color); font-family: var(--font-family), 'Amiri', serif;">
+          REKAP RAMADAN
+        </h1>
+        <div class="flex items-center justify-center gap-2 text-lg" style="color: var(--text-color); opacity: 0.8;">
+          <span class="star-icon">🌙</span>
+          <span>Track Your Spiritual Journey</span>
+          <span class="star-icon">✨</span>
+        </div>
+      </div>
 
-<table border="1" id="rekapTable">
-  <thead>
-    <tr>
-      <th>Hari</th>
-      <th>Wajib</th>
-      <th>Sunnah</th>
-      <th>Tilawah</th>
-      <th>Skor</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+      <!-- Table Card -->
+      <div class="rounded-2xl shadow-2xl overflow-hidden mb-8" style="background: var(--surface-color);">
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr style="background: var(--primary-color); color: white;">
+                <th class="px-4 py-4 text-left font-bold" style="font-family: var(--font-family), 'Cairo', sans-serif;">Hari</th>
+                <th id="columnWajib" class="px-4 py-4 text-center font-bold" style="font-family: var(--font-family), 'Cairo', sans-serif;">Wajib</th>
+                <th id="columnSunnah" class="px-4 py-4 text-center font-bold" style="font-family: var(--font-family), 'Cairo', sans-serif;">Sunnah</th>
+                <th id="columnTilawah" class="px-4 py-4 text-center font-bold" style="font-family: var(--font-family), 'Cairo', sans-serif;">Tilawah</th>
+                <th class="px-4 py-4 text-center font-bold" style="font-family: var(--font-family), 'Cairo', sans-serif;">Skor</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <!-- Rows will be generated here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-<br>
-<b>Total Skor:</b> <span id="totalSkor">0</span><br>
-<b>Level:</b> <span id="levelRamadan">-</span>
-<h2>Grafik Perkembangan Ibadah</h2>
-<canvas id="grafikIbadah" width="600" height="300"></canvas>
-<h2>Raport Ramadan</h2>
-<p>Total Skor: <span id="raportSkor">0</span></p>
-<p>Nilai: <span id="raportNilai">-</span></p>
-<p id="raportCatatan"></p><button onclick="window.print()">Cetak Raport Ramadan</button>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js">let chart;
-
-function updateGrafik() {
-  const rows = document.querySelectorAll("#rekapTable tbody tr");
-  const labels = [];
-  const data = [];
-
-  rows.forEach((row, i) => {
-    labels.push("Hari " + (i + 1));
-    data.push(parseInt(row.cells[4].innerText));
-  });
-
-  if (chart) chart.destroy();
-
-  const ctx = document.getElementById("grafikIbadah").getContext("2d");
-  chart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: labels,
-      datasets: [{
-        label: "Skor Ibadah",
-        data: data,
-        fill: false,
-        tension: 0.3
-      }]
-    }
-  });
-}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
-<script>
-let chart;
-
-window.onload = function () {
-  const tbody = document.querySelector("#rekapTable tbody");
-
-  for (let i = 1; i <= 30; i++) {
-    const row = document.createElement("tr");
-    if (i >= 21) row.classList.add("malam-akhir");
-
-    row.innerHTML = `
-      <td>${i}</td>
-      <td><input type="checkbox" onchange="simpan(); hitung()"></td>
-      <td><input type="checkbox" onchange="simpan(); hitung()"></td>
-      <td><input type="checkbox" onchange="simpan(); hitung()"></td>
-      <td>0</td>
-    `;
-    tbody.appendChild(row);
-  }
-
-  const saved = JSON.parse(localStorage.getItem("ramadanData"));
-  if (saved) {
-    const rows = document.querySelectorAll("#rekapTable tbody tr");
-    saved.forEach((d, i) => {
-      rows[i].cells[1].querySelector("input").checked = d.wajib;
-      rows[i].cells[2].querySelector("input").checked = d.sunnah;
-      rows[i].cells[3].querySelector("input").checked = d.tilawah;
-    });
-  }
-
-  hitung();
-};
-
-function simpan() {
-  const rows = document.querySelectorAll("#rekapTable tbody tr");
-  const data = [];
-
-  rows.forEach(r => {
-    data.push({
-      wajib: r.cells[1].querySelector("input").checked,
-      sunnah: r.cells[2].querySelector("input").checked,
-      tilawah: r.cells[3].querySelector("input").checked
-    });
-  });
-
-  localStorage.setItem("ramadanData", JSON.stringify(data));
-}
-
-function hitung() {
-  let total = 0;
-  const rows = document.querySelectorAll("#rekapTable tbody tr");
-
-  rows.forEach(r => {
-    let skor = 0;
-    if (r.cells[1].querySelector("input").checked) skor += 2;
-    if (r.cells[2].querySelector("input").checked) skor += 1;
-    if (r.cells[3].querySelector("input").checked) skor += 1;
-
-    r.cells[4].innerText = skor;
-    total += skor;
-  });
-
-  document.getElementById("totalSkor").innerText = total;
-  document.getElementById("levelRamadan").innerText =
-    total >= 70 ? "Istiqamah" :
-    total >= 40 ? "Baik" : "Perlu Diperbaiki";
-
-  updateGrafik();
-document.getElementById("raportSkor").innerText = total;
-
-let nilai = "-";
-let catatan = "";
-
-if (total >= 70) {
-  nilai = "A";
-  catatan = "MasyaAllah, ibadah sangat baik.";
-} else if (total >= 50) {
-  nilai = "B";
-  catatan = "Sudah baik, pertahankan.";
-} else if (total >= 30) {
-  nilai = "C";
-  catatan = "Cukup, masih bisa ditingkatkan.";
-} else {
-  nilai = "D";
-  catatan = "Perlu lebih semangat beribadah.";
-}
-
-document.getElementById("raportNilai").innerText = nilai;
-document.getElementById("raportCatatan").innerText = catatan;
-}
-
-function updateGrafik() {
-  const rows = document.querySelectorAll("#rekapTable tbody tr");
-  const labels = [];
-  const data = [];
-
-  rows.forEach((r, i) => {
-    labels.push("Hari " + (i + 1));
-    data.push(Number(r.cells[4].innerText));
-  });
-
-  if (chart) chart.destroy();
-
-  chart = new Chart(
-    document.getElementById("grafikIbadah"),
-    {
-      type: "line",
-      data: {
-        labels: labels,
-        datasets: [{
-          label: "Skor Ibadah",
-          data: data,
-          tension: 0.3
-        }]
-      }
-    }
-  );
-}
-</script>
-
-
-</body>
-</html>
-
-
+      <!-- Summary Card -->
+      <div class="rounded-2xl shadow-2xl p-6 md:p-8 mb-8" style="background: var(--surface-color);">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="text-center md:text-left">
+            <div class="text-lg mb-2" style="color: var(--text-color); opacity: 0.7; font-family: var(--font-family), 'Cairo', sans-serif;" id="totalLabel">
+              Total Skor
+            </div>
+            <div class="text-5xl font-bold"
