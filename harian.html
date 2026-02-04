@@ -1,129 +1,262 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Ramadan Tracker Pro</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Planner Ramadan Ultimate Pro</title>
+
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- PDF Export -->
+  <!-- jsPDF Export -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+  <!-- Chart.js Statistik Amal -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body { font-family: Tahoma, sans-serif; }
+
+    .gold { color: #d4af37; }
+
+    .btn { transition: 0.25s; }
+    .btn:hover { transform: scale(1.02); }
+
+    .dark-mode {
+      background: #0f172a !important;
+      color: white !important;
+    }
+
+    .dark-mode .card {
+      background: #1e293b !important;
+      color: white !important;
+    }
+
+    .dark-mode input,
+    .dark-mode textarea {
+      background: #0f172a !important;
+      color: white !important;
+      border: 1px solid #334155;
+    }
+  </style>
 </head>
 
-<body class="bg-green-50 min-h-screen p-6">
+<body class="bg-gray-50">
 
-  <div class="max-w-3xl mx-auto">
+<!-- ================= LOGIN ================= -->
+<div id="loginScreen"
+  class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-900 to-emerald-700">
 
-    <!-- HEADER -->
-    <div class="text-center mb-6">
-      <h1 class="text-3xl font-bold text-green-800">
-        🌙 Ramadan Tracker Ultimate Pro
-      </h1>
-      <p class="text-gray-600">Checklist Harian + Rekap 30 Hari + Export PDF</p>
+  <div class="bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full text-center">
+    <h1 class="text-2xl font-extrabold text-green-800 mb-2">
+      🌙 Planner Ramadan <span class="gold">Ultimate</span>
+    </h1>
+
+    <p class="text-sm text-gray-500 mb-5">
+      Login dengan Nama & Nomor WhatsApp
+    </p>
+
+    <input id="userName"
+      class="w-full p-3 rounded-xl border mb-3"
+      placeholder="Nama Anda" />
+
+    <input id="waNumber"
+      class="w-full p-3 rounded-xl border mb-4"
+      placeholder="No WhatsApp (08xxxx)" />
+
+    <button onclick="loginUser()"
+      class="btn w-full py-3 rounded-xl bg-green-700 text-white font-bold">
+      🔑 Masuk Sekarang
+    </button>
+
+    <p class="text-xs text-gray-400 mt-4">
+      Data tersimpan offline di perangkat Anda.
+    </p>
+  </div>
+</div>
+
+<!-- ================= DASHBOARD ================= -->
+<div id="dashboard" class="hidden">
+
+  <!-- HEADER -->
+  <header class="p-6 bg-gradient-to-r from-green-800 to-emerald-600 text-white">
+    <h1 class="text-3xl font-bold">🌙 Planner Ramadan Ultimate Pro</h1>
+    <p id="welcomeUser" class="text-sm opacity-90 mt-1"></p>
+
+    <div class="mt-4 flex gap-3 flex-wrap">
+      <button onclick="toggleDarkMode()"
+        class="btn px-4 py-2 rounded-xl bg-black/30">
+        🌙 Dark Mode
+      </button>
+
+      <button onclick="shareWhatsApp()"
+        class="btn px-4 py-2 rounded-xl bg-black/30">
+        📲 Share WhatsApp
+      </button>
+
+      <button onclick="logoutUser()"
+        class="btn px-4 py-2 rounded-xl bg-red-600">
+        🚪 Logout
+      </button>
     </div>
+  </header>
 
-    <!-- LOGIN -->
+  <!-- MAIN -->
+  <main class="p-6 max-w-4xl mx-auto">
+
+    <!-- ================= CHECKLIST ================= -->
     <div class="card bg-white p-6 rounded-2xl shadow mb-6">
       <h2 class="text-xl font-bold text-green-800 mb-3">
-        🔑 Login WhatsApp
+        🕌 Checklist Ibadah Harian
       </h2>
 
-      <input id="wa"
-        class="w-full border rounded-xl p-3 mb-3"
-        placeholder="Masukkan Nomor WhatsApp (contoh: 0852xxxx)">
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
+        <label><input type="checkbox" id="subuh"> Subuh</label>
+        <label><input type="checkbox" id="dzuhur"> Dzuhur</label>
+        <label><input type="checkbox" id="ashar"> Ashar</label>
+        <label><input type="checkbox" id="maghrib"> Maghrib</label>
+        <label><input type="checkbox" id="isya"> Isya</label>
 
-      <button onclick="loginUser()"
-        class="w-full py-3 rounded-xl bg-green-700 text-white font-bold">
-        Masuk
+        <label><input type="checkbox" id="tarawih"> Tarawih</label>
+        <label><input type="checkbox" id="witir"> Witir</label>
+
+        <label><input type="checkbox" id="dhuha"> Dhuha</label>
+        <label><input type="checkbox" id="taubat"> Taubat</label>
+        <label><input type="checkbox" id="hajat"> Hajat</label>
+
+        <label><input type="checkbox" id="sedekah"> Sedekah</label>
+      </div>
+
+      <button onclick="saveChecklist()"
+        class="btn mt-4 w-full py-3 rounded-xl bg-green-700 text-white font-bold">
+        💾 Simpan Checklist Hari Ini
+      </button>
+
+      <button onclick="resetChecklist()"
+        class="btn mt-3 w-full py-3 rounded-xl bg-gray-500 text-white font-bold">
+        🔄 Kosongkan Checklist
       </button>
     </div>
 
-    <!-- DASHBOARD -->
-    <div id="dashboard" style="display:none;">
+    <!-- ================= STATISTIK AMAL ================= -->
+    <div class="card bg-white p-6 rounded-2xl shadow mb-6">
+      <h2 class="text-xl font-bold text-green-800 mb-3">
+        📊 Statistik Amal Mingguan
+      </h2>
 
-      <!-- CHECKLIST -->
-      <div class="card bg-white p-6 rounded-2xl shadow mb-6">
-        <h2 class="text-xl font-bold text-green-800 mb-3">
-          🕌 Checklist Ibadah Hari Ini
-        </h2>
-
-        <p class="text-sm text-gray-500 mb-3">
-          Tanggal: <span id="todayDate"></span>
-        </p>
-
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
-
-          <label><input type="checkbox" id="subuh"> Subuh</label>
-          <label><input type="checkbox" id="dzuhur"> Dzuhur</label>
-          <label><input type="checkbox" id="ashar"> Ashar</label>
-          <label><input type="checkbox" id="maghrib"> Maghrib</label>
-          <label><input type="checkbox" id="isya"> Isya</label>
-
-          <label><input type="checkbox" id="tarawih"> Tarawih</label>
-          <label><input type="checkbox" id="witir"> Witir</label>
-          <label><input type="checkbox" id="dhuha"> Dhuha</label>
-          <label><input type="checkbox" id="taubat"> Taubat</label>
-          <label><input type="checkbox" id="hajat"> Hajat</label>
-          <label><input type="checkbox" id="sedekah"> Sedekah</label>
-
-        </div>
-
-        <button onclick="saveChecklist()"
-          class="mt-4 w-full py-3 rounded-xl bg-green-700 text-white font-bold">
-          💾 Simpan Checklist Hari Ini
-        </button>
-      </div>
-
-      <!-- REKAP 30 HARI -->
-      <div class="card bg-white p-6 rounded-2xl shadow mb-6">
-        <h2 class="text-xl font-bold text-green-800 mb-3">
-          📊 Rekap Checklist 30 Hari
-        </h2>
-
-        <div id="rekapBox" class="text-sm text-gray-700 space-y-2">
-          <!-- isi otomatis -->
-        </div>
-      </div>
-
-      <!-- EXPORT PDF -->
-      <div class="card bg-white p-6 rounded-2xl shadow mb-6">
-        <h2 class="text-xl font-bold text-green-800 mb-3">
-          📄 Export Laporan PDF
-        </h2>
-
-        <button onclick="exportPDF()"
-          class="w-full py-3 rounded-xl bg-emerald-800 text-white font-bold">
-          📄 Export PDF Rekap 30 Hari
-        </button>
-      </div>
-
+      <canvas id="amalChart"></canvas>
     </div>
-  </div>
 
+    <!-- ================= EXPORT PDF ================= -->
+    <div class="card bg-white p-6 rounded-2xl shadow mb-6">
+      <h2 class="text-xl font-bold text-green-800 mb-3">
+        📄 Export PDF Cantik
+      </h2>
+
+      <button onclick="exportPDF()"
+        class="btn w-full py-3 rounded-xl bg-emerald-700 text-white font-bold">
+        📄 Export PDF Tabel
+      </button>
+    </div>
+
+    <!-- ================= DONATION ================= -->
+    <div class="card bg-green-50 p-6 rounded-2xl shadow">
+      <h2 class="text-xl font-bold text-green-800 mb-2">
+        🌟 Dukung Pengembangan Aplikasi
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+
+        <div class="p-4 bg-white rounded-xl border">
+          <p>📱 DANA</p>
+          <strong id="danaNum">085216175600</strong>
+          <button onclick="copyText('danaNum')"
+            class="btn mt-2 w-full py-2 rounded-xl bg-green-700 text-white">
+            📋 Copy Nomor
+          </button>
+        </div>
+
+        <div class="p-4 bg-white rounded-xl border">
+          <p>🏦 Bank Jago</p>
+          <strong id="bankNum">509102449428</strong>
+          <button onclick="copyText('bankNum')"
+            class="btn mt-2 w-full py-2 rounded-xl bg-green-700 text-white">
+            📋 Copy Nomor
+          </button>
+        </div>
+      </div>
+
+      <button onclick="openQRIS()"
+        class="btn mt-4 w-full py-3 rounded-xl bg-yellow-500 font-bold">
+        📌 Lihat QRIS Popup
+      </button>
+    </div>
+
+    <!-- FOOTER CREDIT -->
+    <p class="text-center text-xs text-gray-400 mt-8">
+      ✨ Dibuat oleh <b>Abi Zabdan</b> — Planner Ramadan Ultimate Pro
+    </p>
+
+  </main>
+</div>
+
+<!-- ================= QRIS POPUP ================= -->
+<div id="qrisPopup"
+  class="hidden fixed inset-0 bg-black/70 flex items-center justify-center">
+
+  <div class="bg-white p-6 rounded-2xl text-center max-w-sm w-full">
+    <h2 class="text-xl font-bold text-green-800 mb-3">
+      Scan QRIS Donasi
+    </h2>
+
+    <img src="https://via.placeholder.com/320"
+      class="mx-auto rounded-xl shadow-lg"
+      alt="QRIS">
+
+    <p class="text-xs text-gray-500 mt-3">
+      Ganti placeholder dengan QRIS asli Anda.
+    </p>
+
+    <button onclick="closeQRIS()"
+      class="btn mt-4 w-full py-3 rounded-xl bg-red-600 text-white">
+      ❌ Tutup
+    </button>
+  </div>
+</div>
+
+<!-- ================= SCRIPT ================= -->
 <script>
   let currentUser = "";
+  let currentName = "";
 
-  // ✅ Ambil tanggal hari ini
-  function getToday() {
-    const d = new Date();
-    return d.toISOString().split("T")[0]; // format YYYY-MM-DD
-  }
-
-  // LOGIN
   function loginUser() {
-    const wa = document.getElementById("wa").value.trim();
-    if (!wa) return alert("Masukkan nomor WhatsApp!");
+    const name = document.getElementById("userName").value.trim();
+    const wa = document.getElementById("waNumber").value.trim();
+
+    if (!name) return alert("Nama wajib diisi!");
+    if (wa.length < 8) return alert("Nomor WA tidak valid!");
 
     currentUser = wa;
+    currentName = name;
 
-    document.getElementById("dashboard").style.display = "block";
-    document.getElementById("todayDate").innerText = getToday();
+    localStorage.setItem("ramadan_user", wa);
+    localStorage.setItem("ramadan_name", name);
 
-    loadChecklistToday();
-    loadRekap();
+    document.getElementById("loginScreen").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
+
+    document.getElementById("welcomeUser").innerText =
+      "Assalamu’alaikum, " + currentName + " 🌙";
+
+    loadChecklist();
+    loadChart();
   }
 
-  // ✅ Simpan checklist berdasarkan tanggal
+  function logoutUser() {
+    localStorage.clear();
+    location.reload();
+  }
+
   function saveChecklist() {
     const boxes = document.querySelectorAll("input[type='checkbox']");
     let data = {};
@@ -132,22 +265,13 @@
       data[b.id] = b.checked;
     });
 
-    const todayKey = "checklist_" + currentUser + "_" + getToday();
-    localStorage.setItem(todayKey, JSON.stringify(data));
-
-    alert("✅ Checklist hari ini tersimpan!");
-
-    // reset checkbox
-    boxes.forEach((b) => b.checked = false);
-
-    loadRekap();
+    localStorage.setItem("checklist_" + currentUser, JSON.stringify(data));
+    alert("✅ Checklist tersimpan!");
+    loadChart();
   }
 
-  // ✅ Load checklist hari ini jika sudah pernah disimpan
-  function loadChecklistToday() {
-    const todayKey = "checklist_" + currentUser + "_" + getToday();
-    const saved = localStorage.getItem(todayKey);
-
+  function loadChecklist() {
+    const saved = localStorage.getItem("checklist_" + currentUser);
     if (!saved) return;
 
     const data = JSON.parse(saved);
@@ -158,77 +282,94 @@
     });
   }
 
-  // ✅ Rekap 30 hari terakhir
-  function loadRekap() {
-    const rekapBox = document.getElementById("rekapBox");
-    rekapBox.innerHTML = "";
+  function resetChecklist() {
+    const boxes = document.querySelectorAll("input[type='checkbox']");
+    boxes.forEach((b) => b.checked = false);
 
-    let count = 0;
-
-    for (let i = 0; i < 30; i++) {
-      const d = new Date();
-      d.setDate(d.getDate() - i);
-
-      const dateKey = d.toISOString().split("T")[0];
-      const storageKey = "checklist_" + currentUser + "_" + dateKey;
-
-      const saved = localStorage.getItem(storageKey);
-      if (saved) {
-        count++;
-
-        const data = JSON.parse(saved);
-
-        let done = Object.values(data).filter(v => v).length;
-
-        rekapBox.innerHTML += `
-          <div class="p-2 border rounded-xl">
-            📅 <b>${dateKey}</b> — ✅ ${done}/11 ibadah
-          </div>
-        `;
-      }
-    }
-
-    if (count === 0) {
-      rekapBox.innerHTML = "<p class='text-gray-400'>Belum ada data tersimpan.</p>";
-    }
+    localStorage.removeItem("checklist_" + currentUser);
+    alert("Checklist dikosongkan!");
+    loadChart();
   }
 
-  // ✅ Export PDF Rekap
-  async function exportPDF() {
+  function exportPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    doc.setFontSize(14);
-    doc.text("🌙 Rekap Checklist Ramadan (30 Hari)", 10, 10);
+    doc.setFontSize(16);
+    doc.text("Planner Ramadan Ultimate Pro", 10, 15);
 
-    let y = 20;
+    doc.setFontSize(12);
+    doc.text("Nama: " + currentName, 10, 25);
+    doc.text("No WA: " + currentUser, 10, 32);
 
-    for (let i = 0; i < 30; i++) {
-      const d = new Date();
-      d.setDate(d.getDate() - i);
+    let y = 45;
+    doc.text("Checklist Ibadah:", 10, y);
+    y += 10;
 
-      const dateKey = d.toISOString().split("T")[0];
-      const storageKey = "checklist_" + currentUser + "_" + dateKey;
+    const boxes = document.querySelectorAll("input[type='checkbox']");
+    boxes.forEach((b) => {
+      const label = b.parentElement.innerText.trim();
+      doc.text(`${label} : ${b.checked ? "YA" : "TIDAK"}`, 10, y);
+      y += 8;
+    });
 
-      const saved = localStorage.getItem(storageKey);
-
-      if (saved) {
-        const data = JSON.parse(saved);
-        let done = Object.values(data).filter(v => v).length;
-
-        doc.text(`${dateKey} : ${done}/11 ibadah`, 10, y);
-        y += 8;
-
-        if (y > 280) {
-          doc.addPage();
-          y = 20;
-        }
-      }
-    }
-
-    doc.save("rekap-ramadan.pdf");
+    doc.text("Dibuat oleh Abi Zabdan", 10, y + 15);
+    doc.save("planner-ramadan-ultimate.pdf");
   }
 
+  function copyText(id) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text);
+    alert("✅ Berhasil dicopy!");
+  }
+
+  function openQRIS() {
+    document.getElementById("qrisPopup").classList.remove("hidden");
+  }
+
+  function closeQRIS() {
+    document.getElementById("qrisPopup").classList.add("hidden");
+  }
+
+  function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+  }
+
+  function shareWhatsApp() {
+    const msg = encodeURIComponent(
+      "🌙 Planner Ramadan Ultimate Pro\nAplikasi catatan & checklist ibadah.\nCoba sekarang!"
+    );
+
+    window.open("https://wa.me/?text=" + msg, "_blank");
+  }
+
+  let chart;
+
+  function loadChart() {
+    const boxes = document.querySelectorAll("input[type='checkbox']");
+    let done = 0;
+
+    boxes.forEach((b) => {
+      if (b.checked) done++;
+    });
+
+    const total = boxes.length;
+
+    const ctx = document.getElementById("amalChart");
+
+    if (chart) chart.destroy();
+
+    chart = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: ["Ibadah Selesai", "Belum"],
+        datasets: [{
+          label: "Statistik Amal Hari Ini",
+          data: [done, total - done]
+        }]
+      }
+    });
+  }
 </script>
 
 </body>
