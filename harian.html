@@ -272,9 +272,9 @@
     </header><!-- Day & Date Section -->
     <section class="section-card rounded-2xl p-5 mb-4">
      <div class="flex flex-wrap gap-4">
-      <div class="flex-1 min-w-[140px]"><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> 📅 Hari ke- </label> <input type="number" min="1" max="30" placeholder="1-30" class="input-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;">
+      <div class="flex-1 min-w-[140px]"><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> 📅 Hari ke- </label> <input id="day-input" type="number" min="1" max="30" placeholder="1-30" class="input-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;">
       </div>
-      <div class="flex-1 min-w-[180px]"><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> 📆 Tanggal </label> <input type="date" class="input-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;">
+      <div class="flex-1 min-w-[180px]"><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> 📆 Tanggal </label> <input id="date-input" type="date" class="input-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;">
       </div>
      </div>
     </section><!-- Ibadah Wajib Section -->
@@ -291,25 +291,25 @@
     <section class="section-card rounded-2xl p-5 mb-4">
      <h2 class="text-xl font-bold text-amber-900 mb-4 flex items-center gap-2" style="font-family: 'Amiri', serif;">📖 Target Tilawah Hari Ini</h2>
      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> 🎯 Target </label> <input type="text" placeholder="Contoh: Juz 5, Al-Baqarah 100-150" class="input-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;">
+      <div><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> 🎯 Target </label> <input id="target-tilawah" type="text" placeholder="Contoh: Juz 5, Al-Baqarah 100-150" class="input-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;">
       </div>
-      <div><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> ✅ Realisasi </label> <input type="text" placeholder="Pencapaian hari ini" class="input-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;">
+      <div><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> ✅ Realisasi </label> <input id="realisasi-tilawah" type="text" placeholder="Pencapaian hari ini" class="input-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;">
       </div>
      </div>
     </section><!-- Catatan & Muhasabah Section -->
     <section class="section-card rounded-2xl p-5 mb-4">
      <h2 class="text-xl font-bold text-amber-900 mb-4 flex items-center gap-2" style="font-family: 'Amiri', serif;">📝 Catatan &amp; Muhasabah</h2>
      <div class="space-y-4">
-      <div><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> 😊 Apa yang berjalan baik hari ini? </label> <textarea rows="3" placeholder="Tuliskan hal-hal positif hari ini..." class="textarea-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;"></textarea>
+      <div><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> 😊 Apa yang berjalan baik hari ini? </label> <textarea id="hal-baik"rows="3" placeholder="Tuliskan hal-hal positif hari ini..." class="textarea-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;"></textarea>
       </div>
-      <div><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> �� Apa yang perlu diperbaiki? </label> <textarea rows="3" placeholder="Area yang perlu ditingkatkan..." class="textarea-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;"></textarea>
+      <div><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> �� Apa yang perlu diperbaiki? </label> <textarea id="perlu-diperbaiki"rows="3" placeholder="Area yang perlu ditingkatkan..." class="textarea-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;"></textarea>
       </div>
-      <div><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> 💡 Pelajaran hari ini </label> <textarea rows="3" placeholder="Hikmah yang didapat..." class="textarea-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;"></textarea>
+      <div><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> 💡 Pelajaran hari ini </label> <textarea id="pelajaran"rows="3" placeholder="Hikmah yang didapat..." class="textarea-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;"></textarea>
       </div>
      </div>
     </section><!-- Doa & Harapan Section -->
     <section class="section-card rounded-2xl p-5 mb-4">
-     <h2 class="text-xl font-bold text-amber-900 mb-4 flex items-center gap-2" style="font-family: 'Amiri', serif;">🤲 Doa &amp; Harapan Hari Ini</h2><textarea rows="4" placeholder="Ya Allah, hari ini aku berdoa untuk..." class="textarea-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;"></textarea>
+     <h2 class="text-xl font-bold text-amber-900 mb-4 flex items-center gap-2" style="font-family: 'Amiri', serif;">🤲 Doa &amp; Harapan Hari Ini</h2><textarea id="doa"rows="4" placeholder="Ya Allah, hari ini aku berdoa untuk..." class="textarea-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;"></textarea>
     </section><!-- Refleksi Singkat Section -->
     <section class="section-card rounded-2xl p-5 mb-4">
      <h2 class="text-xl font-bold text-amber-900 mb-4 flex items-center gap-2" style="font-family: 'Amiri', serif;">🌱 Refleksi Singkat</h2>
@@ -750,29 +750,38 @@
       initApp();
     }
 
-    // Helper function to adjust color brightness
-    function adjustColor(hex, percent) {
-      const num = parseInt(hex.replace('#', ''), 16);
-      const amt = Math.round(2.55 * percent);
-      const R = Math.min(255, Math.max(0, (num >> 16) + amt));
-      const G = Math.min(255, Math.max(0, (num >> 8 & 0x00FF) + amt));
-      const B = Math.min(255, Math.max(0, (num & 0x0000FF) + amt));
-      return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
-    }
+     // Helper function to adjust color brightness
+  function adjustColor(hex, percent) {
+    const num = parseInt(hex.replace('#', ''), 16);
+    const amt = Math.round(2.55 * percent);
+    const R = Math.min(255, Math.max(0, (num >> 16) + amt));
+    const G = Math.min(255, Math.max(0, ((num >> 8) & 0x00FF) + amt));
+    const B = Math.min(255, Math.max(0, (num & 0x0000FF) + amt));
+    return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B)
+      .toString(16)
+      .slice(1);
+  }
 
-    // Initialize Element SDK
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig,
-        onConfigChange: async (config) => {
-          // Update main title
-          const titleEl = document.getElementById('main-title');
-          if (titleEl) {
-            titleEl.textContent = config.main_title || defaultConfig.main_title;
-            const customFont = config.font_family || defaultConfig.font_family;
-            titleEl.style.fontFamily = `${customFont}, serif`;
-          }
-          
+  if (window.elementSdk) {
+    window.elementSdk.init({
+      defaultConfig,
+      onConfigChange: async (config) => {
+
+        document.getElementById('main-title').textContent =
+          config.main_title || defaultConfig.main_title;
+
+        document.getElementById('subtitle').textContent =
+          config.subtitle_text || defaultConfig.subtitle_text;
+
+        document.getElementById('footer-message').innerHTML =
+          config.footer_message || defaultConfig.footer_message;
+
+        const bg = config.background_color || defaultConfig.background_color;
+        document.getElementById('app-wrapper').style.background =
+          `linear-gradient(180deg, ${bg}, ${adjustColor(bg, 50)})`;
+      }
+    });
+  }    
           // Update subtitle
           const subtitleEl = document.getElementById('subtitle');
           if (subtitleEl) {
@@ -867,3 +876,4 @@
   </script>
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c8ec6005248ff7f',t:'MTc3MDI1NjM5OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
