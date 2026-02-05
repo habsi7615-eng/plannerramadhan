@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Planner Harian Ramadan</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/data_sdk.js"></script>
   <script src="/_sdk/element_sdk.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -142,9 +143,114 @@
       height: 120px;
       opacity: 0.1;
     }
+
+    .card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(254,249,231,0.95) 100%);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(212, 175, 55, 0.2);
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #78350f;
+      margin-bottom: 20px;
+      text-align: center;
+      font-family: 'Amiri', serif;
+    }
+
+    .donasi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+    }
+
+    .donasi-box {
+      background: white;
+      border: 2px solid transparent;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .donasi-box:nth-child(1) {
+      border-color: #3b82f6;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    }
+
+    .donasi-box:nth-child(1):hover {
+      border-color: #1d4ed8;
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.25);
+    }
+
+    .donasi-box:nth-child(2) {
+      border-color: #10b981;
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    }
+
+    .donasi-box:nth-child(2):hover {
+      border-color: #047857;
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.25);
+    }
+
+    .donasi-box h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 0 12px 0;
+      color: #1f2937;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .donasi-box p {
+      font-size: 16px;
+      font-weight: 600;
+      color: #374151;
+      margin: 0 0 12px 0;
+      font-family: 'Poppins', sans-serif;
+      word-break: break-all;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      width: 100%;
+    }
+
+    .btn-green {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+    }
+
+    .btn-green:hover {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-green:active {
+      transform: translateY(0);
+    }
+
+    .btn-green.copied {
+      background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    }
   </style>
   <style>@view-transition { navigation: auto; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
  <body class="h-full m-0 overflow-auto">
   <div id="app-wrapper" class="min-h-full w-full relative" style="background: linear-gradient(180deg, #0f172a 0%, #1e3a5f 30%, #2d4a6f 60%, #3d5a7f 100%);"><!-- Stars Background -->
@@ -174,39 +280,32 @@
     </section><!-- Ibadah Wajib Section -->
     <section class="section-card rounded-2xl p-5 mb-4">
      <h2 class="text-xl font-bold text-amber-900 mb-4 flex items-center gap-2" style="font-family: 'Amiri', serif;">🕋 Checklist Ibadah Wajib</h2>
-     <div class="grid grid-cols-2 md:grid-cols-3 gap-3"><label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Subuh</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Dzuhur</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Ashar</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Maghrib</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Isya</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom" name="subuh">
-<input type="checkbox" class="checkbox-custom" name="dzuhur">
-<input type="checkbox" class="checkbox-custom" name="ashar">
-<input type="checkbox" class="checkbox-custom" name="maghrib">
-<input type="checkbox" class="checkbox-custom" name="isya">
-<input type="checkbox" class="checkbox-custom" name="puasa">
- <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Puasa</span> </label>
+     <div class="grid grid-cols-2 md:grid-cols-3 gap-3"><label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Subuh</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Dzuhur</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Ashar</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Maghrib</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Isya</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Puasa</span> </label>
      </div>
     </section><!-- Ibadah Sunnah Section -->
     <section class="section-card rounded-2xl p-5 mb-4">
      <h2 class="text-xl font-bold text-amber-900 mb-4 flex items-center gap-2" style="font-family: 'Amiri', serif;">🌙 Ibadah Sunnah</h2>
-     <div class="grid grid-cols-2 md:grid-cols-3 gap-3"><label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Tarawih</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Witir</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Dhuha</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Tahajud</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Rawatib</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Dzikir</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors col-span-2 md:col-span-1"> <input type="checkbox" class="checkbox-custom" name="tarawih">
-<input type="checkbox" class="checkbox-custom" name="witir">
-<input type="checkbox" class="checkbox-custom" name="dhuha">
-<input type="checkbox" class="checkbox-custom" name="tahajud">
-<input type="checkbox" class="checkbox-custom" name="rawatib">
-<input type="checkbox" class="checkbox-custom" name="dzikir">
-<input type="checkbox" class="checkbox-custom" name="sedekah">
- <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Sedekah</span> </label>
+     <div class="grid grid-cols-2 md:grid-cols-3 gap-3"><label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Tarawih</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Witir</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Dhuha</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Tahajud</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Rawatib</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Dzikir</span> </label> <label class="flex items-center gap-3 p-3 rounded-xl bg-amber-50/50 hover:bg-amber-100/50 cursor-pointer transition-colors col-span-2 md:col-span-1"> <input type="checkbox" class="checkbox-custom"> <span class="text-gray-700" style="font-family: 'Poppins', sans-serif;">Sedekah</span> </label>
      </div>
     </section><!-- Target Tilawah Section -->
     <section class="section-card rounded-2xl p-5 mb-4">
      <h2 class="text-xl font-bold text-amber-900 mb-4 flex items-center gap-2" style="font-family: 'Amiri', serif;">📖 Target Tilawah Hari Ini</h2>
      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> 🎯 Target </label> <input type="text"
-  name="tilawah_target"
-  placeholder="Contoh: Juz 5, Al-Baqarah 100-150"input-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;">
+      <div><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> 🎯 Target </label> <input type="text" placeholder="Contoh: Juz 5, Al-Baqarah 100-150" class="input-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;">
       </div>
-      <div><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> ✅ Realisasi </label> <input type="text"
-  name="tilawah_realisasi"
-  placeholder="Pencapaian hari ini"input-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;">
+      <div><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> ✅ Realisasi </label> <input type="text" placeholder="Pencapaian hari ini" class="input-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;">
       </div>
-    
+     </div>
+    </section><!-- Catatan & Muhasabah Section -->
+    <section class="section-card rounded-2xl p-5 mb-4">
+     <h2 class="text-xl font-bold text-amber-900 mb-4 flex items-center gap-2" style="font-family: 'Amiri', serif;">📝 Catatan &amp; Muhasabah</h2>
+     <div class="space-y-4">
+      <div><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> 😊 Apa yang berjalan baik hari ini? </label> <textarea rows="3" placeholder="Tuliskan hal-hal positif hari ini..." class="textarea-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;"></textarea>
+      </div>
+      <div><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> �� Apa yang perlu diperbaiki? </label> <textarea rows="3" placeholder="Area yang perlu ditingkatkan..." class="textarea-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;"></textarea>
+      </div>
+      <div><label class="block text-sm font-medium text-amber-800 mb-2" style="font-family: 'Poppins', sans-serif;"> 💡 Pelajaran hari ini </label> <textarea rows="3" placeholder="Hikmah yang didapat..." class="textarea-field w-full px-4 py-3 rounded-xl bg-white/80 text-gray-800" style="font-family: 'Poppins', sans-serif;"></textarea>
+      </div>
      </div>
     </section><!-- Doa & Harapan Section -->
     <section class="section-card rounded-2xl p-5 mb-4">
@@ -225,14 +324,70 @@
         <p class="text-sm text-gray-500" style="font-family: 'Poppins', sans-serif;">Besok InsyaAllah lebih baik</p>
        </div></label>
      </div>
-    </section><!-- Footer -->
-    <footer class="text-center py-8">
-     <div class="inline-block p-6 rounded-2xl bg-gradient-to-r from-amber-500/20 to-amber-300/20 backdrop-blur-sm border border-amber-400/30">
+    </section><!-- Donasi Section -->
+    <div class="card mb-6">
+     <div class="card-title">
+      ⭐ Dukung Aplikasi Ini
+     </div>
+     <div class="donasi-grid">
+      <div class="donasi-box">
+       <h3>💙 DANA</h3>
+       <p>085216175600</p><button class="btn btn-green copy-donasi-btn" data-text="085216175600">📋 Copy Nomor</button>
+      </div>
+      <div class="donasi-box">
+       <h3>🏦 Bank Jago</h3>
+       <p>509136744228</p><button class="btn btn-green copy-donasi-btn" data-text="509136744228">📋 Copy Nomor</button>
+      </div>
+     </div>
+    </div><!-- Action Buttons -->
+    <div class="flex flex-wrap gap-3 justify-center mb-6"><button id="save-btn" class="px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 transition-all hover:scale-105 active:scale-95 shadow-lg" style="font-family: 'Poppins', sans-serif;"> 💾 Simpan Hari ke-<span id="day-display">1</span> </button> <button id="history-btn" class="px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 transition-all hover:scale-105 active:scale-95 shadow-lg" style="font-family: 'Poppins', sans-serif;"> 📋 Riwayat </button>
+    </div><!-- Footer -->
+    <footer class="text-center py-8 relative z-10">
+     <div class="inline-block p-6 rounded-2xl bg-gradient-to-r from-amber-500/20 to-amber-300/20 backdrop-blur-sm border border-amber-400/30 mb-4">
       <p id="footer-message" class="text-amber-100 text-lg leading-relaxed" style="font-family: 'Amiri', serif;">✨ Hari ini mungkin belum sempurna,<br>
         tapi setiap niat baik dicatat sebagai pahala.</p>
      </div>
      <p class="text-amber-200/50 text-sm mt-4" style="font-family: 'Poppins', sans-serif;">🌙 Ramadan Mubarak 🌙</p>
-    </footer>
+     <p class="text-amber-200/40 text-xs mt-3" style="font-family: 'Poppins', sans-serif;">Dibuat oleh <span class="font-semibold text-amber-200/60">Abi Zabdan</span> 💜</p>
+    </footer><!-- History Modal -->
+    <div id="history-modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+     <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-auto">
+      <div class="sticky top-0 bg-gradient-to-r from-amber-500 to-orange-500 p-6 flex justify-between items-center rounded-t-2xl">
+       <h3 class="text-white text-2xl font-bold" style="font-family: 'Amiri', serif;">📋 Riwayat Hari</h3><button id="close-history-btn" class="text-white text-2xl hover:scale-110 transition-transform"> ✕ </button>
+      </div>
+      <div id="history-list" class="p-6 space-y-4"><!-- History items will be inserted here -->
+      </div>
+     </div>
+    </div><!-- Donation Modal -->
+    <div id="donate-modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+     <div class="bg-gradient-to-br from-red-50 to-pink-50 rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-auto">
+      <div class="sticky top-0 bg-gradient-to-r from-red-500 to-pink-600 p-6 flex justify-between items-center rounded-t-2xl">
+       <h3 class="text-white text-2xl font-bold" style="font-family: 'Amiri', serif;">❤️ Dukung Aplikasi Ini</h3><button id="close-donate-btn" class="text-white text-2xl hover:scale-110 transition-transform"> ✕ </button>
+      </div>
+      <div class="p-6 space-y-4">
+       <p class="text-center text-gray-700 mb-6" style="font-family: 'Poppins', sans-serif;">Setiap dukungan Anda membantu kami mengembangkan aplikasi ini lebih baik lagi 💜</p><!-- DANA -->
+       <div class="bg-white rounded-xl p-5 border-2 border-blue-300/50 hover:border-blue-400 transition-colors">
+        <h4 class="text-lg font-bold text-blue-600 mb-2" style="font-family: 'Poppins', sans-serif;">💙 DANA</h4>
+        <div class="flex items-center justify-between gap-3 bg-blue-50 p-3 rounded-lg">
+         <p class="text-gray-800 font-semibold" style="font-family: 'Poppins', sans-serif;">085216175600</p><button class="copy-btn px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold transition-colors" data-text="085216175600" style="font-family: 'Poppins', sans-serif;"> 📋 Copy </button>
+        </div>
+       </div><!-- Bank Jago -->
+       <div class="bg-white rounded-xl p-5 border-2 border-green-300/50 hover:border-green-400 transition-colors">
+        <h4 class="text-lg font-bold text-green-600 mb-2" style="font-family: 'Poppins', sans-serif;">🏦 Bank Jago</h4>
+        <div class="flex items-center justify-between gap-3 bg-green-50 p-3 rounded-lg">
+         <p class="text-gray-800 font-semibold" style="font-family: 'Poppins', sans-serif;">509136744228</p><button class="copy-btn px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600 text-white font-semibold transition-colors" data-text="509136744228" style="font-family: 'Poppins', sans-serif;"> 📋 Copy </button>
+        </div>
+       </div><!-- WhatsApp -->
+       <div class="bg-white rounded-xl p-5 border-2 border-emerald-300/50 hover:border-emerald-400 transition-colors">
+        <h4 class="text-lg font-bold text-emerald-600 mb-2" style="font-family: 'Poppins', sans-serif;">💬 Hubungi Langsung</h4><a href="https://wa.me/085216175600" target="_blank" rel="noopener noreferrer" class="block w-full px-4 py-3 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-center transition-colors" style="font-family: 'Poppins', sans-serif;"> 📱 WhatsApp Abi Zabdan </a>
+       </div>
+       <div class="mt-6 p-4 rounded-xl bg-red-50 border-2 border-red-200">
+        <p class="text-sm text-gray-700 text-center" style="font-family: 'Poppins', sans-serif;">🙏 Terima kasih atas dukungan Anda!<br>
+          Setiap donasi akan digunakan untuk pengembangan aplikasi dan memberikan yang terbaik untuk pengguna.</p>
+       </div>
+      </div>
+     </div>
+    </div>
    </div><!-- Mosque Silhouette SVG -->
    <svg class="mosque-silhouette" viewbox="0 0 1200 200" preserveaspectratio="xMidYMax slice"><path fill="#d4af37" d="M0,200 L0,180 L50,180 L50,160 L100,160 L100,140 C100,120 120,100 150,100 C180,100 200,120 200,140 L200,160 L250,160 L250,100 C250,60 280,40 320,40 L320,20 L330,20 L330,0 L340,0 L340,20 L350,20 L350,40 C390,40 420,60 420,100 L420,160 L470,160 L470,180 L520,180 L520,200 L600,200 L600,180 L650,180 L650,150 C650,130 670,110 700,110 C730,110 750,130 750,150 L750,180 L800,180 L800,200 L900,200 L900,180 L950,180 L950,120 C950,80 980,50 1020,50 L1020,30 L1030,30 L1030,10 L1040,10 L1040,30 L1050,30 L1050,50 C1090,50 1120,80 1120,120 L1120,180 L1200,180 L1200,200 Z" />
    </svg>
@@ -257,7 +412,7 @@
     
     createStars();
 
-    // Default configuration
+    // Default configuration for Element SDK
     const defaultConfig = {
       main_title: '🌙 PLANNER HARIAN RAMADAN',
       subtitle_text: '1 Hari = 1 Halaman',
@@ -270,6 +425,340 @@
       font_family: 'Amiri',
       font_size: 16
     };
+
+    // State management
+    let currentData = [];
+    let isSaving = false;
+
+    // Collect current form data
+    function collectFormData() {
+      const dayNumber = parseInt(document.querySelector('input[type="number"]').value) || 1;
+      const tanggal = document.querySelector('input[type="date"]').value;
+      
+      const wajibChecks = document.querySelectorAll('.section-card')[1].querySelectorAll('input[type="checkbox"]');
+      const sunnahChecks = document.querySelectorAll('.section-card')[2].querySelectorAll('input[type="checkbox"]');
+      
+      const checklist_wajib = Array.from(wajibChecks).map(cb => cb.checked ? '1' : '0').join(',');
+      const checklist_sunnah = Array.from(sunnahChecks).map(cb => cb.checked ? '1' : '0').join(',');
+      
+      const inputs = document.querySelectorAll('input[type="text"]');
+      const target_tilawah = inputs[2]?.value || '';
+      const realisasi_tilawah = inputs[3]?.value || '';
+      
+      const textareas = document.querySelectorAll('textarea');
+      const hal_baik = textareas[0]?.value || '';
+      const perlu_diperbaiki = textareas[1]?.value || '';
+      const pelajaran = textareas[2]?.value || '';
+      const doa = textareas[3]?.value || '';
+      
+      const refleksi = document.querySelector('input[name="refleksi"]:checked')?.value || '';
+      
+      return {
+        day_number: dayNumber,
+        tanggal: tanggal,
+        checklist_wajib,
+        checklist_sunnah,
+        target_tilawah,
+        realisasi_tilawah,
+        hal_baik,
+        perlu_diperbaiki,
+        pelajaran,
+        doa,
+        refleksi,
+        timestamp: new Date().toISOString()
+      };
+    }
+
+    // Clear form to next day
+    function clearFormForNextDay() {
+      const dayInput = document.querySelector('input[type="number"]');
+      const currentDay = parseInt(dayInput.value) || 1;
+      dayInput.value = currentDay + 1;
+      
+      // Update display
+      document.getElementById('day-display').textContent = currentDay + 1;
+      
+      // Clear date
+      document.querySelector('input[type="date"]').value = '';
+      
+      // Uncheck all checkboxes
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+      
+      // Clear all text inputs and textareas
+      document.querySelectorAll('input[type="text"]').forEach(input => input.value = '');
+      document.querySelectorAll('textarea').forEach(textarea => textarea.value = '');
+      
+      // Clear radio buttons
+      document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
+    }
+
+    // Parse checklist data
+    function parseChecklistData(checklistStr) {
+      if (!checklistStr) return [];
+      return checklistStr.split(',').map(val => val === '1');
+    }
+
+    // Calculate completion percentage
+    function calculateCompletion(checklistStr) {
+      if (!checklistStr) return 0;
+      const items = parseChecklistData(checklistStr);
+      const completed = items.filter(item => item).length;
+      return Math.round((completed / items.length) * 100);
+    }
+
+    // Create bar chart for checklists
+    function createBarChart(wajibData, sunnahData) {
+      const wajibCompleted = calculateCompletion(wajibData);
+      const sunnahCompleted = calculateCompletion(sunnahData);
+      
+      return `
+        <div class="mt-4 space-y-3">
+          <div>
+            <div class="flex justify-between mb-1">
+              <span class="text-xs font-semibold text-gray-700" style="font-family: 'Poppins', sans-serif;">🕋 Ibadah Wajib</span>
+              <span class="text-xs font-bold text-amber-700" style="font-family: 'Poppins', sans-serif;">${wajibCompleted}%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+              <div class="bg-gradient-to-r from-amber-400 to-amber-600 h-2 rounded-full transition-all" style="width: ${wajibCompleted}%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1">
+              <span class="text-xs font-semibold text-gray-700" style="font-family: 'Poppins', sans-serif;">🌙 Ibadah Sunnah</span>
+              <span class="text-xs font-bold text-blue-700" style="font-family: 'Poppins', sans-serif;">${sunnahCompleted}%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+              <div class="bg-gradient-to-r from-blue-400 to-blue-600 h-2 rounded-full transition-all" style="width: ${sunnahCompleted}%"></div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Create refleksi pie chart
+    function createRefleksiIcon(refleksi) {
+      const icons = {
+        'maksimal': { emoji: '⭐', label: 'Maksimal', color: 'text-green-600' },
+        'cukup': { emoji: '👍', label: 'Cukup Baik', color: 'text-amber-600' },
+        'perbaiki': { emoji: '💪', label: 'Perlu Perbaikan', color: 'text-blue-600' }
+      };
+      
+      const icon = icons[refleksi] || { emoji: '❓', label: 'Belum Dinilai', color: 'text-gray-600' };
+      return `<div class="inline-block p-2 rounded-lg bg-opacity-20" style="background-color: currentColor;">
+        <span class="text-2xl">${icon.emoji}</span>
+        <p class="text-xs font-semibold ${icon.color}" style="font-family: 'Poppins', sans-serif;">${icon.label}</p>
+      </div>`;
+    }
+
+    // Render history list
+    function renderHistoryList(data) {
+      const historyList = document.getElementById('history-list');
+      historyList.innerHTML = '';
+      
+      if (data.length === 0) {
+        historyList.innerHTML = '<p class="text-center text-gray-500 py-8" style="font-family: \'Poppins\', sans-serif;">Belum ada catatan hari yang disimpan.</p>';
+        return;
+      }
+      
+      data.forEach((item, index) => {
+        const date = item.tanggal ? new Date(item.tanggal).toLocaleDateString('id-ID') : 'Tanpa tanggal';
+        const card = document.createElement('div');
+        card.className = 'bg-white/70 rounded-xl p-4 border-2 border-amber-200/50 hover:border-amber-400/50 transition-colors';
+        
+        const barChart = createBarChart(item.checklist_wajib, item.checklist_sunnah);
+        const refleksiIcon = createRefleksiIcon(item.refleksi);
+        
+        let detailsHtml = '';
+        if (item.hal_baik || item.perlu_diperbaiki || item.pelajaran) {
+          detailsHtml = `
+            <div class="mt-3 p-3 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg text-xs space-y-1">
+              ${item.hal_baik ? `<p class="text-gray-700"><span class="font-semibold text-green-700">✅ Positif:</span> ${item.hal_baik.substring(0, 60)}${item.hal_baik.length > 60 ? '...' : ''}</p>` : ''}
+              ${item.perlu_diperbaiki ? `<p class="text-gray-700"><span class="font-semibold text-amber-700">🔧 Perbaikan:</span> ${item.perlu_diperbaiki.substring(0, 60)}${item.perlu_diperbaiki.length > 60 ? '...' : ''}</p>` : ''}
+              ${item.pelajaran ? `<p class="text-gray-700"><span class="font-semibold text-blue-700">💡 Pelajaran:</span> ${item.pelajaran.substring(0, 60)}${item.pelajaran.length > 60 ? '...' : ''}</p>` : ''}
+            </div>
+          `;
+        }
+        
+        card.innerHTML = `
+          <div class="flex justify-between items-start mb-3">
+            <div>
+              <h4 class="font-bold text-amber-900" style="font-family: 'Amiri', serif; font-size: 18px;">
+                Hari ke-${item.day_number}
+              </h4>
+              <p class="text-sm text-gray-600" style="font-family: 'Poppins', sans-serif;">📅 ${date}</p>
+            </div>
+            <button onclick="deleteHistoryItem(${index})" class="text-red-500 hover:text-red-700 font-bold transition-colors text-lg">
+              🗑️
+            </button>
+          </div>
+          
+          <!-- Refleksi Status -->
+          <div class="flex justify-center mb-3">
+            ${refleksiIcon}
+          </div>
+          
+          <!-- Progress Charts -->
+          ${barChart}
+          
+          <!-- Details -->
+          ${detailsHtml}
+          
+          ${item.doa ? `<p class="text-xs text-gray-600 mt-2 italic border-l-2 border-amber-400 pl-2" style="font-family: 'Poppins', sans-serif;">💬 Doa: "${item.doa.substring(0, 80)}${item.doa.length > 80 ? '...' : ''}"</p>` : ''}
+        `;
+        
+        historyList.appendChild(card);
+      });
+    }
+
+    // Data Handler for SDK
+    const dataHandler = {
+      onDataChanged(data) {
+        currentData = data;
+        renderHistoryList(data);
+      }
+    };
+
+    // Delete history item
+    window.deleteHistoryItem = async function(index) {
+      if (currentData[index]) {
+        const result = await window.dataSdk.delete(currentData[index]);
+        if (!result.isOk) {
+          alert('Gagal menghapus catatan');
+        }
+      }
+    };
+
+    // Initialize SDK and setup event listeners
+    async function initApp() {
+      if (window.dataSdk) {
+        const initResult = await window.dataSdk.init(dataHandler);
+        if (!initResult.isOk) {
+          console.error('Failed to initialize Data SDK');
+        }
+      }
+
+      // Save button
+      document.getElementById('save-btn').addEventListener('click', async () => {
+        if (isSaving) return;
+        
+        isSaving = true;
+        document.getElementById('save-btn').disabled = true;
+        document.getElementById('save-btn').innerHTML = '⏳ Menyimpan...';
+        
+        try {
+          const formData = collectFormData();
+          
+          if (window.dataSdk) {
+            const result = await window.dataSdk.create(formData);
+            if (result.isOk) {
+              // Show success feedback
+              document.getElementById('save-btn').innerHTML = '✅ Tersimpan!';
+              await new Promise(resolve => setTimeout(resolve, 1500));
+              
+              // Clear form and move to next day
+              clearFormForNextDay();
+            } else {
+              alert('Gagal menyimpan data: ' + result.error.message);
+            }
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Terjadi kesalahan saat menyimpan');
+        } finally {
+          isSaving = false;
+          document.getElementById('save-btn').disabled = false;
+          document.getElementById('save-btn').innerHTML = '💾 Simpan Hari ke-<span id="day-display">1</span>';
+        }
+      });
+
+      // History button
+      document.getElementById('history-btn').addEventListener('click', () => {
+        document.getElementById('history-modal').classList.remove('hidden');
+      });
+
+      // Close history modal
+      document.getElementById('close-history-btn').addEventListener('click', () => {
+        document.getElementById('history-modal').classList.add('hidden');
+      });
+
+      // Close modal on outside click
+      document.getElementById('history-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'history-modal') {
+          document.getElementById('history-modal').classList.add('hidden');
+        }
+      });
+
+      // Donation modal
+      document.getElementById('close-donate-btn').addEventListener('click', () => {
+        document.getElementById('donate-modal').classList.add('hidden');
+      });
+
+      document.getElementById('donate-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'donate-modal') {
+          document.getElementById('donate-modal').classList.add('hidden');
+        }
+      });
+
+      // Copy buttons
+      document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const text = btn.getAttribute('data-text');
+          try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.textContent;
+            btn.textContent = '✅ Tersalin!';
+            btn.classList.add('bg-opacity-70');
+            setTimeout(() => {
+              btn.textContent = originalText;
+              btn.classList.remove('bg-opacity-70');
+            }, 2000);
+          } catch (err) {
+            console.error('Failed to copy:', err);
+          }
+        });
+      });
+
+      // Copy donasi buttons
+      document.querySelectorAll('.copy-donasi-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const text = btn.getAttribute('data-text');
+          try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.textContent;
+            btn.textContent = '✅ Tersalin!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+              btn.textContent = originalText;
+              btn.classList.remove('copied');
+            }, 2000);
+          } catch (err) {
+            console.error('Failed to copy:', err);
+          }
+        });
+      });
+
+      // Update day display when day input changes
+      document.querySelector('input[type="number"]').addEventListener('input', (e) => {
+        document.getElementById('day-display').textContent = e.target.value || '1';
+      });
+    }
+
+    // Start app when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
+
+    // Helper function to adjust color brightness
+    function adjustColor(hex, percent) {
+      const num = parseInt(hex.replace('#', ''), 16);
+      const amt = Math.round(2.55 * percent);
+      const R = Math.min(255, Math.max(0, (num >> 16) + amt));
+      const G = Math.min(255, Math.max(0, (num >> 8 & 0x00FF) + amt));
+      const B = Math.min(255, Math.max(0, (num & 0x0000FF) + amt));
+      return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
+    }
 
     // Initialize Element SDK
     if (window.elementSdk) {
@@ -375,16 +864,6 @@
         ])
       });
     }
-    
-    // Helper function to adjust color brightness
-    function adjustColor(hex, percent) {
-      const num = parseInt(hex.replace('#', ''), 16);
-      const amt = Math.round(2.55 * percent);
-      const R = Math.min(255, Math.max(0, (num >> 16) + amt));
-      const G = Math.min(255, Math.max(0, (num >> 8 & 0x00FF) + amt));
-      const B = Math.min(255, Math.max(0, (num & 0x0000FF) + amt));
-      return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
-    }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c8e68aba5aefdf7',t:'MTc3MDI1MjU3Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c8ec6005248ff7f',t:'MTc3MDI1NjM5OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
